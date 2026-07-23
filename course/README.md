@@ -1,6 +1,6 @@
-# 🎓 Enterprise Machine Learning Textbook & Master Class
+# 🎓 Enterprise Machine Learning & AI Engineering Masterclass
 
-Welcome to the **Enterprise Machine Learning Master Course**. This textbook-style curriculum covers end-to-end applied machine learning—from foundational data cleaning and feature engineering to mathematical derivations of modern gradient boosting algorithms (XGBoost, LightGBM, CatBoost), regularization theory, dimensionality reduction, probability calibration, and enterprise deployment strategies.
+Welcome to the **Enterprise Machine Learning & AI Masterclass**. This 360-degree textbook curriculum covers applied machine learning—from foundational data cleaning, feature engineering, and regularization theory to deep neural networks, XGBoost/LightGBM/CatBoost mathematics, explainable AI (SHAP/LIME), hyperparameter optimization (Optuna), MLOps data drift, and high-performance production serving.
 
 Throughout this course, theoretical concepts are directly anchored to real-world code implementations from the **12 Production ML Pipelines** in this repository (`src/`).
 
@@ -75,6 +75,50 @@ Throughout this course, theoretical concepts are directly anchored to real-world
 
 ---
 
-## 🎯 How to Use This Course
-1. **Linear Learning Path**: Read Chapters 1 through 6 sequentially for a rigorous theoretical foundation.
-2. **Applied Reference**: Study Chapter 7 alongside the source code in `src/` to see theoretical principles translated into production Python code.
+### 🧠 [Chapter 8: Neural Networks & Deep Learning Foundations](file:///e:/Downloads/ML_only/course/08_neural_networks_and_deep_learning.md)
+- **Artificial Neurons & Activation Functions**: Sigmoid, ReLU, GELU, Swish, and Softmax.
+- **Backpropagation Mathematics**: Chain-rule gradient derivations ($\frac{\partial \mathcal{L}}{\partial W^{(l)}}$).
+- **Modern Optimizers**: SGD + Momentum, RMSprop, Adam, **AdamW** (decoupled weight decay), Cosine Annealing schedulers.
+- **Deep Architectures**: CNNs (ResNet residual skip connections) and **Transformers** (Scaled Dot-Product Self-Attention $Q, K, V$).
+- *Repository Case Anchor*: Vision inspection in [`src/defect_detection/pipeline.py`](file:///e:/Downloads/ML_only/src/defect_detection/pipeline.py).
+
+---
+
+### ⚙️ [Chapter 9: MLOps, Data Drift & Model Monitoring](file:///e:/Downloads/ML_only/course/09_mlops_monitoring_and_governance.md)
+- **MLOps Continuous Lifecycle Loop**: CI/CD/CT pipelines and automated experiment tracking.
+- **Data Drift vs. Concept Drift**: Covariate shift $P(X)$ vs conditional target shift $P(Y \mid X)$.
+- **Statistical Drift Detection**: Kolmogorov-Smirnov (KS) tests ($p$-value $< 0.05$), Population Stability Index (PSI).
+- **Deployment Strategies**: Blue/Green, Canary Rollouts, and Shadow (Silent) Deployments.
+- **Production Monitoring**: Prometheus metrics & FastAPI telemetry endpoints.
+- *Repository Case Anchor*: Production API infrastructure in [`api/routes.py`](file:///e:/Downloads/ML_only/api/routes.py).
+
+---
+
+### 🔍 [Chapter 10: Explainable AI (XAI) — SHAP & LIME](file:///e:/Downloads/ML_only/course/10_explainable_ai_shap_lime.md)
+- **The Explainability Imperative**: Regulatory compliance (GDPR Right to Explanation, FCRA Adverse Action notices).
+- **SHAP Mathematics**: Cooperative Game Theory Shapley values ($\phi_i$), efficiency additivity, TreeSHAP.
+- **SHAP Visualizations**: Summary plots, Waterfall plots, and Force plots.
+- **LIME Framework**: Local surrogate linear models and perturbation sampling.
+- *Repository Case Anchor*: Feature attributions in [`src/fraud_detection/pipeline.py`](file:///e:/Downloads/ML_only/src/fraud_detection/pipeline.py) and [`src/credit_risk/pipeline.py`](file:///e:/Downloads/ML_only/src/credit_risk/pipeline.py).
+
+---
+
+### 🎛️ [Chapter 11: Hyperparameter Optimization & Optuna](file:///e:/Downloads/ML_only/course/11_hyperparameter_optimization_optuna.md)
+- **Search Space Strategies**: Grid Search vs Random Search vs Bayesian Optimization.
+- **Bayesian Mathematics**: Gaussian Processes (GP) and Expected Improvement (EI) acquisition functions.
+- **Optuna Framework**: Tree-structured Parzen Estimators (TPE), Hyperband, and Median Pruners.
+- *Repository Case Anchor*: Hyperparameter tuning in [`src/house_prices/pipeline.py`](file:///e:/Downloads/ML_only/src/house_prices/pipeline.py).
+
+---
+
+### ⚡ [Chapter 12: Production Serving & Inference Optimization](file:///e:/Downloads/ML_only/course/12_production_serving_and_inference_optimization.md)
+- **Model Serialization Standards**: Joblib vs. ONNX (Open Neural Network Exchange) vs. TensorRT.
+- **Inference Optimization**: INT8 Quantization, Weight Pruning, zero-copy memory mapping.
+- **FastAPI Microservice Optimization**: Async IO, Warm-Start lifespan caching, multi-worker process concurrency.
+- *Repository Case Anchor*: Web application serving in [`api/main.py`](file:///e:/Downloads/ML_only/api/main.py) and containerization in [`Dockerfile`](file:///e:/Downloads/ML_only/Dockerfile).
+
+---
+
+## 🎯 How to Use This Masterclass
+1. **Theoretical Mastery**: Study Chapters 1 through 6 and 8 through 12 sequentially.
+2. **Production Application**: Review Chapter 7 alongside source code in `src/` to observe theoretical principles running in live FastAPI microservices.
