@@ -1,6 +1,6 @@
-# 🎓 Enterprise Machine Learning & AI Engineering Masterclass
+# 🎓 Enterprise Machine Learning & AI Engineering 17-Chapter Masterclass
 
-Welcome to the **Enterprise Machine Learning & AI Masterclass**. This 360-degree textbook curriculum covers applied machine learning—from foundational data cleaning, feature engineering, and regularization theory to deep neural networks, XGBoost/LightGBM/CatBoost mathematics, explainable AI (SHAP/LIME), hyperparameter optimization (Optuna), MLOps data drift, and high-performance production serving.
+Welcome to the **Enterprise Machine Learning & AI Masterclass**. This complete 17-chapter curriculum covers applied machine learning—from foundational data cleaning, feature engineering, and regularization theory to deep neural networks, XGBoost/LightGBM/CatBoost mathematics, explainable AI (SHAP/LIME), hyperparameter optimization (Optuna), MLOps data drift, time-series LSTMs, graph neural networks, reinforcement learning, Transformers, and Retrieval-Augmented Generation (RAG).
 
 Throughout this course, theoretical concepts are directly anchored to real-world code implementations from the **12 Production ML Pipelines** in this repository (`src/`).
 
@@ -119,6 +119,43 @@ Throughout this course, theoretical concepts are directly anchored to real-world
 
 ---
 
-## 🎯 How to Use This Masterclass
-1. **Theoretical Mastery**: Study Chapters 1 through 6 and 8 through 12 sequentially.
-2. **Production Application**: Review Chapter 7 alongside source code in `src/` to observe theoretical principles running in live FastAPI microservices.
+### 📈 [Chapter 13: Advanced Time-Series & Sequential Deep Learning](file:///e:/Downloads/ML_only/course/13_advanced_time_series_and_forecasting.md)
+- **Stationarity & Statistical Tests**: Stationarity, Differencing, Augmented Dickey-Fuller (ADF) test ($p$-value $< 0.05$).
+- **Classical Models**: ARIMA($p, d, q$), SARIMAX seasonal exogenous models.
+- **Sequential Neural Networks**: Recurrent Neural Networks (RNNs) and **LSTM** gating mathematics (Forget gate $f_t$, Input gate $i_t$, Cell state $C_t$, Output gate $o_t$).
+- **Modern Forecasting Transformers**: Temporal Fusion Transformer (TFT) and N-BEATS.
+- *Repository Case Anchor*: Time-series demand forecasting in [`src/demand_forecasting/pipeline.py`](file:///e:/Downloads/ML_only/src/demand_forecasting/pipeline.py).
+
+---
+
+### 🕵️ [Chapter 14: Unsupervised Anomaly Detection & Density Estimation](file:///e:/Downloads/ML_only/course/14_anomaly_detection_and_density_estimation.md)
+- **Density Estimation**: Gaussian Mixture Models (GMM) and Expectation-Maximization (EM) algorithm.
+- **Spatial Distance Anomalies**: Mahalanobis Distance ($D_M(x) = \sqrt{(x-\mu)^T \Sigma^{-1} (x-\mu)}$), Local Outlier Factor (LOF), One-Class SVM.
+- **Deep Anomaly Architecture**: Autoencoder reconstruction error thresholding ($\|x - \hat{x}\|^2$) and Variational Autoencoders (VAE - ELBO loss $\text{KL}(q(z|x) \parallel p(z))$).
+- *Repository Case Anchor*: Transaction anomaly detection in [`src/fraud_detection/pipeline.py`](file:///e:/Downloads/ML_only/src/fraud_detection/pipeline.py).
+
+---
+
+### 🕸️ [Chapter 15: Graph Neural Networks (GNNs) & Network Analytics](file:///e:/Downloads/ML_only/course/15_graph_neural_networks_gnn.md)
+- **Graph Representations**: Adjacency matrix $A$, Degree matrix $D$, Feature matrix $X$, Graph Laplacian $L = D - A$.
+- **Message Passing Framework**: Node neighborhood feature aggregation and updating ($h_v^{(l+1)} = \text{UPDATE}(h_v^{(l)}, m_v^{(l+1)})$).
+- **GNN Architectures**: Graph Convolutional Networks (GCN - $\tilde{D}^{-1/2} \tilde{A} \tilde{D}^{-1/2} H^{(l)} W^{(l)}$) and Graph Attention Networks (GAT - dynamic edge attention $\alpha_{ij}$).
+- **Enterprise Applications**: Financial fraud ring detection, anti-money laundering (AML), and transaction graphs.
+- *Repository Case Anchor*: Network velocity analysis in [`src/fraud_detection/pipeline.py`](file:///e:/Downloads/ML_only/src/fraud_detection/pipeline.py).
+
+---
+
+### 🎮 [Chapter 16: Reinforcement Learning & Sequential Decision Making](file:///e:/Downloads/ML_only/course/16_reinforcement_learning_foundations.md)
+- **Markov Decision Processes (MDP)**: States $\mathcal{S}$, Actions $\mathcal{A}$, Transition Probabilities $\mathcal{P}$, Rewards $\mathcal{R}$, Discount Factor $\gamma$.
+- **Bellman Equations**: State-value $V^\pi(s)$, Action-value $Q^\pi(s, a)$, Optimality Equations.
+- **Algorithms**: Q-Learning Temporal Difference, Deep Q-Networks (DQN - Experience Replay, Target Network $\theta^-$), Proximal Policy Optimization (PPO clipped surrogate), and Direct Preference Optimization (DPO / RLHF).
+- *Repository Case Anchor*: Sequential recommendation discovery in [`src/recommendation/pipeline.py`](file:///e:/Downloads/ML_only/src/recommendation/pipeline.py).
+
+---
+
+### 🔤 [Chapter 17: NLP — From Word Embeddings to LLMs & RAG](file:///e:/Downloads/ML_only/course/17_nlp_embeddings_to_llms.md)
+- **Dense Word Embeddings**: Word2Vec (Skip-Gram & CBOW negative sampling), GloVe, FastText subword n-grams.
+- **Transformer Architecture**: Multi-Head Self-Attention, Sinusoidal & **Rotary Position Embeddings (RoPE)**.
+- **Large Language Models (LLMs)**: Causal Decoder-only modeling ($P(w_t \mid w_{<t})$), Parameter-Efficient Fine-Tuning (**LoRA / QLoRA** low-rank matrix decomposition $W_0 + B \cdot A$).
+- **Retrieval-Augmented Generation (RAG)**: Chunking, Vector Database indexing, Cosine similarity search, and prompt context augmentation.
+- *Repository Case Anchor*: Text classification & key term extraction in [`src/document_classification/pipeline.py`](file:///e:/Downloads/ML_only/src/document_classification/pipeline.py).
