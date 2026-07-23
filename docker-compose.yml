@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  ml-suite-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: production_ml_suite
+    ports:
+      - "8000:8000"
+    environment:
+      - PORT=8000
+      - ENVIRONMENT=production
+    restart: always
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
