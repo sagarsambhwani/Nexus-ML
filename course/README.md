@@ -1,6 +1,6 @@
-# 🎓 Enterprise Machine Learning & AI Engineering 30-Chapter Definitive Omnibus
+# 🎓 Enterprise Machine Learning & AI Engineering 35-Chapter Master Treasury
 
-Welcome to the **Enterprise Machine Learning & AI 30-Chapter Master Omnibus**. This complete 30-chapter compendium covers applied machine learning—from foundational data cleaning, feature engineering, and regularization theory to deep neural networks, XGBoost/LightGBM/CatBoost mathematics, explainable AI (SHAP/LIME), hyperparameter optimization (Optuna), MLOps data drift, time-series LSTMs, graph neural networks, reinforcement learning, Transformers, Diffusion Models, Computer Vision, AI Ethics, Multi-Modal VLMs, Federated Learning, Causal Inference, AI Agent Architectures, Model Compression, High-Dimensional Feature Selection, Self-Supervised Learning, Geospatial ML, Speech Processing, and AI Security.
+Welcome to the **Enterprise Machine Learning & AI 35-Chapter Master Treasury**. This complete 35-chapter compendium covers applied machine learning—from foundational data cleaning, feature engineering, and regularization theory to deep neural networks, XGBoost/LightGBM/CatBoost mathematics, explainable AI (SHAP/LIME), hyperparameter optimization (Optuna), MLOps data drift, time-series LSTMs, graph neural networks, reinforcement learning, Transformers, Diffusion Models, Computer Vision, AI Ethics, Multi-Modal VLMs, Federated Learning, Causal Inference, AI Agent Architectures, Model Compression, High-Dimensional Feature Selection, Self-Supervised Learning, Geospatial ML, Audio Processing, AI Security, Quantum Machine Learning (QML), Neuromorphic Computing (SNNs), Physics-Informed Neural Networks (PINNs), Synthetic Data Generation (CTGAN), and Extreme Multi-Label Classification (XMLC).
 
 Throughout this course, theoretical concepts are directly anchored to real-world code implementations from the **12 Production ML Pipelines** in this repository (`src/`).
 
@@ -237,7 +237,7 @@ Throughout this course, theoretical concepts are directly anchored to real-world
 ---
 
 ### 🌐 [Chapter 28: Geospatial ML & Spatiotemporal Modeling](file:///e:/Downloads/ML_only/course/28_geospatial_ml_and_spatiotemporal_modeling.md)
-- **Spatial Autocorrelation**: Tobler's First Law, Moran's $I$ statistic, Geary's $C$.
+- **Spatial Autocorrelation**: Tobler's Law, Moran's $I$ statistic, Geary's $C$.
 - **Geospatial Indexing**: Uber H3 Hexagonal Grid, S2 Geometry, Geohashing.
 - **Spatiotemporal Deep Learning**: ConvLSTM (2D Spatial + Temporal LSTM) and ST-GCN.
 - *Repository Case Anchor*: Spatial distance features in [`src/house_prices/pipeline.py`](file:///e:/Downloads/ML_only/src/house_prices/pipeline.py).
@@ -246,14 +246,51 @@ Throughout this course, theoretical concepts are directly anchored to real-world
 
 ### 🎙️ [Chapter 29: Audio & Speech Processing with Neural Networks](file:///e:/Downloads/ML_only/course/29_audio_and_speech_processing_ml.md)
 - **Audio Signal Processing**: Short-Time Fourier Transform (STFT), Mel-Spectrograms, MFCCs.
-- **Speech Recognition Models**: Connectionist Temporal Classification (**CTC Loss**), Conformer.
-- **Audio Foundation Models**: OpenAI **Whisper** and Neural Audio Codecs (EnCodec).
+- **Speech Recognition Models**: Connectionist Temporal Classification (**CTC Loss** for unaligned ASR), OpenAI **Whisper** Transformer, EnCodec.
 - *Repository Case Anchor*: Sequence classification in [`src/sentiment_analysis/pipeline.py`](file:///e:/Downloads/ML_only/src/sentiment_analysis/pipeline.py).
 
 ---
 
 ### 🛡️ [Chapter 30: AI Security, Adversarial Robustness & Attack Mitigation](file:///e:/Downloads/ML_only/course/30_ai_security_adversarial_robustness.md)
-- **Adversarial Attack Algorithms**: Fast Gradient Sign Method (**FGSM** $x_{\text{adv}} = x + \epsilon \cdot \text{sign}(\nabla_x \mathcal{L})$), PGD Attack, C&W Attack.
-- **Poisoning & Backdoor Attacks**: Data poisoning and trigger backdoors.
+- **Adversarial Attack Algorithms**: Fast Gradient Sign Method (**FGSM** $x_{\text{adv}} = x + \epsilon \cdot \text{sign}(\nabla_x \mathcal{L})$), PGD Attack, C&W, Data Poisoning & Trigger Backdoors.
 - **Adversarial Defense**: Min-Max Adversarial Training ($\min_\theta \mathbb{E}[\max_{\|\delta\| \le \epsilon} \mathcal{L}]$) and Randomized Smoothing.
 - *Repository Case Anchor*: Security robustness in [`src/fraud_detection/pipeline.py`](file:///e:/Downloads/ML_only/src/fraud_detection/pipeline.py).
+
+---
+
+### ⚛️ [Chapter 31: Quantum Machine Learning (QML) & Variational Circuits](file:///e:/Downloads/ML_only/course/31_quantum_machine_learning.md)
+- **Quantum Mechanics Fundamentals**: Qubits $|\psi\rangle = \alpha|0\rangle + \beta|1\rangle$, Superposition, Entanglement ($|\Phi^+\rangle = \frac{1}{\sqrt{2}}(|00\rangle + |11\rangle)$), Quantum Gates ($H, X, Y, Z, \text{CNOT}$).
+- **Quantum Feature Maps**: Hilbert Space mapping $|U(x)\rangle$.
+- **Variational Quantum Circuits (VQC)**: Parameter-shift rule quantum gradient calculation $\frac{\partial f}{\partial \theta} = \frac{f(\theta + \pi/2) - f(\theta - \pi/2)}{2}$.
+- *Repository Case Anchor*: Feature scoring in [`src/fraud_detection/pipeline.py`](file:///e:/Downloads/ML_only/src/fraud_detection/pipeline.py).
+
+---
+
+### 🧠 [Chapter 32: Neuromorphic Computing & Spiking Neural Networks (SNNs)](file:///e:/Downloads/ML_only/course/32_neuromorphic_computing_and_snn.md)
+- **Event-Driven Processing**: Asynchronous micro-Watt spike pulse processing.
+- **Leaky Integrate-and-Fire (LIF)**: Membrane potential math $\tau_m \frac{dV(t)}{dt} = -(V(t) - V_{\text{rest}}) + R I(t)$, Threshold spike trigger $S(t) = \delta(V(t) - V_{\text{th}})$.
+- **Biological Learning**: Spike-Timing-Dependent Plasticity (**STDP**) and Surrogate Gradient backpropagation.
+- *Repository Case Anchor*: Telemetry streams in [`src/predictive_maintenance/pipeline.py`](file:///e:/Downloads/ML_only/src/predictive_maintenance/pipeline.py).
+
+---
+
+### ⚛️ [Chapter 33: Physics-Informed Neural Networks (PINNs) & Scientific ML](file:///e:/Downloads/ML_only/course/33_physics_informed_neural_networks_pinn.md)
+- **Physics Loss Formulation**: Embedding Partial Differential Equations (PDEs - Burgers' & Navier-Stokes fluid equations) into neural loss functions $\mathcal{L}_{\text{PINN}} = \mathcal{L}_{\text{data}} + \lambda_{\text{PDE}} \mathcal{L}_{\text{PDE}}$.
+- **Autograd Derivatives**: Computing exact spatial/temporal partial derivatives $\frac{\partial u}{\partial x}, \frac{\partial^2 u}{\partial x^2}$ without grid meshes.
+- *Repository Case Anchor*: Sensor physics modeling in [`src/predictive_maintenance/pipeline.py`](file:///e:/Downloads/ML_only/src/predictive_maintenance/pipeline.py).
+
+---
+
+### 🧪 [Chapter 34: Synthetic Data Generation & Tabular GANs (CTGAN)](file:///e:/Downloads/ML_only/course/34_synthetic_data_generation_ctgan.md)
+- **Enterprise Synthetic Data**: GDPR compliance data sharing, rare event augmentation.
+- **CTGAN Architecture**: Mode-specific normalization via Gaussian Mixture Models (GMM) + Conditional Generator + Training-by-Sampling.
+- **Evaluation Metrics**: Kolmogorov-Smirnov distribution similarity, Machine Learning Efficacy, Nearest Neighbor Distance Ratio (NNDR).
+- *Repository Case Anchor*: Synthetic feature sampling in [`src/medical_diagnosis/pipeline.py`](file:///e:/Downloads/ML_only/src/medical_diagnosis/pipeline.py).
+
+---
+
+### 🏷️ [Chapter 35: Extreme Multi-Label Classification (XMLC) & Search Indexing](file:///e:/Downloads/ML_only/course/35_extreme_multilabel_classification.md)
+- **Extreme Scale**: Millions of target categories ($K > 1,000,000$) in e-commerce product taggers.
+- **Hierarchical Trees**: FastXML, Probabilistic Label Trees (PLT).
+- **Sub-Linear Retrieval**: Dual-encoder bi-attentive dense retrieval + HNSW (Hierarchical Navigable Small World) ANN graphs.
+- *Repository Case Anchor*: Document tagging in [`src/document_classification/pipeline.py`](file:///e:/Downloads/ML_only/src/document_classification/pipeline.py).
