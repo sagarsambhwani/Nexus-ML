@@ -1,6 +1,6 @@
-# 🎓 Enterprise Machine Learning & AI Engineering 20-Chapter Masterclass
+# 🎓 Enterprise Machine Learning & AI Engineering 25-Chapter Ultimate Masterclass
 
-Welcome to the **Enterprise Machine Learning & AI Masterclass**. This complete 20-chapter curriculum covers applied machine learning—from foundational data cleaning, feature engineering, and regularization theory to deep neural networks, XGBoost/LightGBM/CatBoost mathematics, explainable AI (SHAP/LIME), hyperparameter optimization (Optuna), MLOps data drift, time-series LSTMs, graph neural networks, reinforcement learning, Transformers, Diffusion Models, Computer Vision, and AI Ethics/Safety Alignment.
+Welcome to the **Enterprise Machine Learning & AI 25-Chapter Masterclass**. This complete 25-chapter compendium covers applied machine learning—from foundational data cleaning, feature engineering, and regularization theory to deep neural networks, XGBoost/LightGBM/CatBoost mathematics, explainable AI (SHAP/LIME), hyperparameter optimization (Optuna), MLOps data drift, time-series LSTMs, graph neural networks, reinforcement learning, Transformers, Diffusion Models, Computer Vision, AI Ethics, Multi-Modal VLMs, Federated Learning, Causal Inference, AI Agent Architectures, and Model Compression (Quantization/Distillation).
 
 Throughout this course, theoretical concepts are directly anchored to real-world code implementations from the **12 Production ML Pipelines** in this repository (`src/`).
 
@@ -161,16 +161,13 @@ Throughout this course, theoretical concepts are directly anchored to real-world
 ---
 
 ### 🎨 [Chapter 18: Generative AI & Diffusion Models](file:///e:/Downloads/ML_only/course/18_generative_ai_and_diffusion_models.md)
-- **GANs**: Generative Adversarial Networks minimax game math $\min_G \max_D V(D, G)$, Mode Collapse, Wasserstein GAN with Gradient Penalty (WGAN-GP).
-- **Diffusion Models**: Forward Markov Noise process $q(x_t \mid x_{t-1})$, Reverse Denoising $p_\theta(x_{t-1} \mid x_t)$ predicting noise $\epsilon_\theta(x_t, t)$, Latent Diffusion (Stable Diffusion / ControlNet).
+- **GANs**: Generative Adversarial Networks minimax game math $\min_G \max_D V(D, G)$, WGAN-GP gradient penalty, DDPM Forward Markov Noise process $q(x_t \mid x_{t-1})$, Reverse U-Net Denoising $p_\theta(x_{t-1} \mid x_t)$, Latent Diffusion (Stable Diffusion / ControlNet).
 - *Repository Case Anchor*: Visual inspection feature metrics in [`src/defect_detection/pipeline.py`](file:///e:/Downloads/ML_only/src/defect_detection/pipeline.py).
 
 ---
 
 ### 👁️ [Chapter 19: Computer Vision — Detection, Segmentation & ViTs](file:///e:/Downloads/ML_only/course/19_computer_vision_object_detection_segmentation.md)
-- **Object Detection**: Two-stage (Faster R-CNN, Region Proposals, Anchor boxes, IoU, NMS) vs. Single-stage (**YOLOv8**, Focal Loss).
-- **Segmentation**: U-Net architecture skip connections, Mask R-CNN, Segment Anything Model (**SAM**).
-- **Vision Transformers (ViT)**: Patchifying images into $16 \times 16$ visual tokens, positional embeddings, and ViT self-attention.
+- **Object Detection**: Two-stage (Faster R-CNN, RPN, Anchors, IoU, NMS) vs Single-stage (**YOLOv8** real-time dense prediction), U-Net skip connections, Mask R-CNN, Segment Anything Model (**SAM**), Vision Transformers (ViT $16 \times 16$ patchifying).
 - *Repository Case Anchor*: Quality inspection in [`src/defect_detection/pipeline.py`](file:///e:/Downloads/ML_only/src/defect_detection/pipeline.py).
 
 ---
@@ -178,5 +175,45 @@ Throughout this course, theoretical concepts are directly anchored to real-world
 ### ⚖️ [Chapter 20: AI Ethics, Fairness & Safety Alignment](file:///e:/Downloads/ML_only/course/20_ai_ethics_fairness_and_safety_alignment.md)
 - **Algorithmic Fairness Metrics**: Demographic Parity, Equalized Odds, Equal Opportunity, Disparate Impact Ratio ($> 0.80$ rule).
 - **Bias Mitigation**: Pre-processing (re-weighing, adversarial sampling), In-processing (adversarial debiasing), Post-processing (threshold tuning).
-- **AI Safety & Alignment**: RLHF (Reinforcement Learning from Human Feedback), Constitutional AI, Red Teaming, and Guardrails (Llama Guard, NeMo Guardrails).
+- **AI Safety & Alignment**: RLHF (Reinforcement Learning from Human Feedback), Constitutional AI, Red Teaming, and Guardrails (Llama Guard).
 - *Repository Case Anchor*: FCRA compliance in [`src/credit_risk/README.md`](file:///e:/Downloads/ML_only/src/credit_risk/README.md).
+
+---
+
+### 🖼️ [Chapter 21: Multi-Modal Learning & Vision-Language Models (VLMs)](file:///e:/Downloads/ML_only/course/21_multimodal_learning_and_vlm.md)
+- **CLIP Architecture**: Contrastive Language-Image Pre-training loss math $\mathcal{L}_{\text{contrastive}} = \frac{1}{2}(\mathcal{L}_{I \to T} + \mathcal{L}_{T \to I})$.
+- **Vision-Language Models (VLMs)**: LLaVA, Qwen-VL (Visual Encoder + Cross-Modal Projection + Causal LLM).
+- **Joint Embedding Spaces**: Image-Text-Audio joint embeddings (ImageBind).
+- *Repository Case Anchor*: Visual inspection & text classification in [`src/defect_detection/pipeline.py`](file:///e:/Downloads/ML_only/src/defect_detection/pipeline.py).
+
+---
+
+### 🔐 [Chapter 22: Federated Learning & Privacy-Preserving AI](file:///e:/Downloads/ML_only/course/22_federated_learning_and_privacy_preserving_ai.md)
+- **Federated Averaging (FedAvg)**: Distributed client gradient aggregation $\theta_{t+1} = \sum_{k=1}^K \frac{n_k}{n} \theta_{t+1}^k$.
+- **Differential Privacy (DP)**: $(\epsilon, \delta)$-Differential Privacy, DP-SGD (Gradient clipping $C$, Gaussian noise addition $\sigma$).
+- **Encrypted Machine Learning**: Homomorphic Encryption (HE) and Secure Multi-Party Computation (SMPC).
+- *Repository Case Anchor*: HIPAA privacy in [`src/medical_diagnosis/README.md`](file:///e:/Downloads/ML_only/src/medical_diagnosis/README.md).
+
+---
+
+### 🔮 [Chapter 23: Causal Inference & Counterfactual Machine Learning](file:///e:/Downloads/ML_only/course/23_causal_inference_and_counterfactual_ml.md)
+- **Pearl's Causal Hierarchy**: Association $P(y|x)$ vs. Intervention $P(y \mid \text{do}(x))$ vs. Counterfactuals $P(y_x \mid x', y')$.
+- **Structural Causal Models (SCMs)**: Confounders, Mediators, Colliders, and Directed Acyclic Graphs (DAGs).
+- **Causal Estimators**: Propensity Score Matching (PSM), Inverse Probability Weighting (IPW), Double Machine Learning (DML).
+- *Repository Case Anchor*: Retention treatment rules in [`src/customer_churn/pipeline.py`](file:///e:/Downloads/ML_only/src/customer_churn/pipeline.py).
+
+---
+
+### 🤖 [Chapter 24: AI Agent Architectures, Function Calling & Tool Use](file:///e:/Downloads/ML_only/course/24_ai_agent_architectures_and_tool_use.md)
+- **Agent Paradigms**: ReAct (Reasoning + Acting loop), Plan-and-Solve, Reflection & Self-Correction loops.
+- **Tool Use & Function Calling**: JSON schema binding, API execution, and dynamic environment observation.
+- **Multi-Agent Orchestration**: CrewAI, AutoGen, and LangGraph state-machine DAGs.
+- *Repository Case Anchor*: REST API tools in [`api/routes.py`](file:///e:/Downloads/ML_only/api/routes.py).
+
+---
+
+### ⚡ [Chapter 25: Efficient Model Compression — Distillation, Quantization & Pruning](file:///e:/Downloads/ML_only/course/25_efficient_fine_tuning_and_model_compression.md)
+- **Knowledge Distillation**: Teacher-Student networks, Temperature scaling $T$, KL-Divergence loss $\mathcal{L}_{\text{KD}} = T^2 \text{KL}(\sigma(z_s/T) \parallel \sigma(z_t/T))$.
+- **Advanced Quantization**: Post-Training Quantization (PTQ) vs QAT, AWQ (Activation-aware Weight Quantization), GPTQ.
+- **Sparse Weight Pruning**: Magnitude pruning, Movement pruning, and Structured channel pruning.
+- *Repository Case Anchor*: Production API serving in [`api/main.py`](file:///e:/Downloads/ML_only/api/main.py).
