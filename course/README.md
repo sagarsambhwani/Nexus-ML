@@ -1,6 +1,6 @@
-# 🎓 Enterprise Machine Learning & AI Engineering 25-Chapter Ultimate Masterclass
+# 🎓 Enterprise Machine Learning & AI Engineering 30-Chapter Definitive Omnibus
 
-Welcome to the **Enterprise Machine Learning & AI 25-Chapter Masterclass**. This complete 25-chapter compendium covers applied machine learning—from foundational data cleaning, feature engineering, and regularization theory to deep neural networks, XGBoost/LightGBM/CatBoost mathematics, explainable AI (SHAP/LIME), hyperparameter optimization (Optuna), MLOps data drift, time-series LSTMs, graph neural networks, reinforcement learning, Transformers, Diffusion Models, Computer Vision, AI Ethics, Multi-Modal VLMs, Federated Learning, Causal Inference, AI Agent Architectures, and Model Compression (Quantization/Distillation).
+Welcome to the **Enterprise Machine Learning & AI 30-Chapter Master Omnibus**. This complete 30-chapter compendium covers applied machine learning—from foundational data cleaning, feature engineering, and regularization theory to deep neural networks, XGBoost/LightGBM/CatBoost mathematics, explainable AI (SHAP/LIME), hyperparameter optimization (Optuna), MLOps data drift, time-series LSTMs, graph neural networks, reinforcement learning, Transformers, Diffusion Models, Computer Vision, AI Ethics, Multi-Modal VLMs, Federated Learning, Causal Inference, AI Agent Architectures, Model Compression, High-Dimensional Feature Selection, Self-Supervised Learning, Geospatial ML, Speech Processing, and AI Security.
 
 Throughout this course, theoretical concepts are directly anchored to real-world code implementations from the **12 Production ML Pipelines** in this repository (`src/`).
 
@@ -205,7 +205,7 @@ Throughout this course, theoretical concepts are directly anchored to real-world
 ---
 
 ### 🤖 [Chapter 24: AI Agent Architectures, Function Calling & Tool Use](file:///e:/Downloads/ML_only/course/24_ai_agent_architectures_and_tool_use.md)
-- **Agent Paradigms**: ReAct (Reasoning + Acting loop), Plan-and-Solve, Reflection & Self-Correction loops.
+- **Agent Paradigms**: ReAct (Reasoning + Acting $\text{Thought}_t \to \text{Action}_t \to \text{Observation}_t$), Plan-and-Solve, Reflection & Self-Correction loops.
 - **Tool Use & Function Calling**: JSON schema binding, API execution, and dynamic environment observation.
 - **Multi-Agent Orchestration**: CrewAI, AutoGen, and LangGraph state-machine DAGs.
 - *Repository Case Anchor*: REST API tools in [`api/routes.py`](file:///e:/Downloads/ML_only/api/routes.py).
@@ -217,3 +217,43 @@ Throughout this course, theoretical concepts are directly anchored to real-world
 - **Advanced Quantization**: Post-Training Quantization (PTQ) vs QAT, AWQ (Activation-aware Weight Quantization), GPTQ.
 - **Sparse Weight Pruning**: Magnitude pruning, Movement pruning, and Structured channel pruning.
 - *Repository Case Anchor*: Production API serving in [`api/main.py`](file:///e:/Downloads/ML_only/api/main.py).
+
+---
+
+### 🔬 [Chapter 26: High-Dimensional Feature Selection & Sparse Representations](file:///e:/Downloads/ML_only/course/26_high_dimensional_feature_selection.md)
+- **Filter Methods**: Chi-Square ($\chi^2$), Mutual Information Score $I(X; Y)$, ANOVA $F$-test.
+- **Wrapper Methods**: Recursive Feature Elimination (RFE / RFECV), Sequential Selection.
+- **Embedded Methods**: Boruta Algorithm (Shadow features comparison), Tree MDI vs MDA Permutation Importance.
+- *Repository Case Anchor*: Feature selection in [`src/fraud_detection/pipeline.py`](file:///e:/Downloads/ML_only/src/fraud_detection/pipeline.py).
+
+---
+
+### 🔄 [Chapter 27: Semi-Supervised & Self-Supervised Learning (SSL)](file:///e:/Downloads/ML_only/course/27_semi_supervised_and_self_supervised_learning.md)
+- **Semi-Supervised Learning**: Pseudo-Labeling, Label Propagation, Consistency Regularization (FixMatch confidence thresholding $\tau$).
+- **Self-Supervised Vision**: SimCLR (NT-Xent contrastive loss), BYOL, Masked Autoencoders (**MAE** 75% patch masking).
+- **Self-Supervised NLP**: Masked Language Modeling (BERT MLM) and Next Sentence Prediction.
+- *Repository Case Anchor*: Unsupervised patch features in [`src/defect_detection/pipeline.py`](file:///e:/Downloads/ML_only/src/defect_detection/pipeline.py).
+
+---
+
+### 🌐 [Chapter 28: Geospatial ML & Spatiotemporal Modeling](file:///e:/Downloads/ML_only/course/28_geospatial_ml_and_spatiotemporal_modeling.md)
+- **Spatial Autocorrelation**: Tobler's First Law, Moran's $I$ statistic, Geary's $C$.
+- **Geospatial Indexing**: Uber H3 Hexagonal Grid, S2 Geometry, Geohashing.
+- **Spatiotemporal Deep Learning**: ConvLSTM (2D Spatial + Temporal LSTM) and ST-GCN.
+- *Repository Case Anchor*: Spatial distance features in [`src/house_prices/pipeline.py`](file:///e:/Downloads/ML_only/src/house_prices/pipeline.py).
+
+---
+
+### 🎙️ [Chapter 29: Audio & Speech Processing with Neural Networks](file:///e:/Downloads/ML_only/course/29_audio_and_speech_processing_ml.md)
+- **Audio Signal Processing**: Short-Time Fourier Transform (STFT), Mel-Spectrograms, MFCCs.
+- **Speech Recognition Models**: Connectionist Temporal Classification (**CTC Loss**), Conformer.
+- **Audio Foundation Models**: OpenAI **Whisper** and Neural Audio Codecs (EnCodec).
+- *Repository Case Anchor*: Sequence classification in [`src/sentiment_analysis/pipeline.py`](file:///e:/Downloads/ML_only/src/sentiment_analysis/pipeline.py).
+
+---
+
+### 🛡️ [Chapter 30: AI Security, Adversarial Robustness & Attack Mitigation](file:///e:/Downloads/ML_only/course/30_ai_security_adversarial_robustness.md)
+- **Adversarial Attack Algorithms**: Fast Gradient Sign Method (**FGSM** $x_{\text{adv}} = x + \epsilon \cdot \text{sign}(\nabla_x \mathcal{L})$), PGD Attack, C&W Attack.
+- **Poisoning & Backdoor Attacks**: Data poisoning and trigger backdoors.
+- **Adversarial Defense**: Min-Max Adversarial Training ($\min_\theta \mathbb{E}[\max_{\|\delta\| \le \epsilon} \mathcal{L}]$) and Randomized Smoothing.
+- *Repository Case Anchor*: Security robustness in [`src/fraud_detection/pipeline.py`](file:///e:/Downloads/ML_only/src/fraud_detection/pipeline.py).
