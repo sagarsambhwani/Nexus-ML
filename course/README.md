@@ -1,6 +1,6 @@
-# 🎓 Enterprise Machine Learning & AI Engineering 17-Chapter Masterclass
+# 🎓 Enterprise Machine Learning & AI Engineering 20-Chapter Masterclass
 
-Welcome to the **Enterprise Machine Learning & AI Masterclass**. This complete 17-chapter curriculum covers applied machine learning—from foundational data cleaning, feature engineering, and regularization theory to deep neural networks, XGBoost/LightGBM/CatBoost mathematics, explainable AI (SHAP/LIME), hyperparameter optimization (Optuna), MLOps data drift, time-series LSTMs, graph neural networks, reinforcement learning, Transformers, and Retrieval-Augmented Generation (RAG).
+Welcome to the **Enterprise Machine Learning & AI Masterclass**. This complete 20-chapter curriculum covers applied machine learning—from foundational data cleaning, feature engineering, and regularization theory to deep neural networks, XGBoost/LightGBM/CatBoost mathematics, explainable AI (SHAP/LIME), hyperparameter optimization (Optuna), MLOps data drift, time-series LSTMs, graph neural networks, reinforcement learning, Transformers, Diffusion Models, Computer Vision, and AI Ethics/Safety Alignment.
 
 Throughout this course, theoretical concepts are directly anchored to real-world code implementations from the **12 Production ML Pipelines** in this repository (`src/`).
 
@@ -129,8 +129,7 @@ Throughout this course, theoretical concepts are directly anchored to real-world
 ---
 
 ### 🕵️ [Chapter 14: Unsupervised Anomaly Detection & Density Estimation](file:///e:/Downloads/ML_only/course/14_anomaly_detection_and_density_estimation.md)
-- **Density Estimation**: Gaussian Mixture Models (GMM) and Expectation-Maximization (EM) algorithm.
-- **Spatial Distance Anomalies**: Mahalanobis Distance ($D_M(x) = \sqrt{(x-\mu)^T \Sigma^{-1} (x-\mu)}$), Local Outlier Factor (LOF), One-Class SVM.
+- **Density Estimation**: Gaussian Mixture Models (GMM) EM algorithm, Mahalanobis Distance $D_M(x) = \sqrt{(x-\mu)^T \Sigma^{-1} (x-\mu)}$, Local Outlier Factor (LOF), One-Class SVM.
 - **Deep Anomaly Architecture**: Autoencoder reconstruction error thresholding ($\|x - \hat{x}\|^2$) and Variational Autoencoders (VAE - ELBO loss $\text{KL}(q(z|x) \parallel p(z))$).
 - *Repository Case Anchor*: Transaction anomaly detection in [`src/fraud_detection/pipeline.py`](file:///e:/Downloads/ML_only/src/fraud_detection/pipeline.py).
 
@@ -139,8 +138,7 @@ Throughout this course, theoretical concepts are directly anchored to real-world
 ### 🕸️ [Chapter 15: Graph Neural Networks (GNNs) & Network Analytics](file:///e:/Downloads/ML_only/course/15_graph_neural_networks_gnn.md)
 - **Graph Representations**: Adjacency matrix $A$, Degree matrix $D$, Feature matrix $X$, Graph Laplacian $L = D - A$.
 - **Message Passing Framework**: Node neighborhood feature aggregation and updating ($h_v^{(l+1)} = \text{UPDATE}(h_v^{(l)}, m_v^{(l+1)})$).
-- **GNN Architectures**: Graph Convolutional Networks (GCN - $\tilde{D}^{-1/2} \tilde{A} \tilde{D}^{-1/2} H^{(l)} W^{(l)}$) and Graph Attention Networks (GAT - dynamic edge attention $\alpha_{ij}$).
-- **Enterprise Applications**: Financial fraud ring detection, anti-money laundering (AML), and transaction graphs.
+- **GNN Architectures**: Graph Convolutional Networks (GCN - $\tilde{D}^{-1/2} \tilde{A} \tilde{D}^{-1/2} H^{(l)} W^{(l)}$) and Graph Attention Networks (GAT - dynamic edge attention $\alpha_{ij}$), Fraud Ring & AML networks.
 - *Repository Case Anchor*: Network velocity analysis in [`src/fraud_detection/pipeline.py`](file:///e:/Downloads/ML_only/src/fraud_detection/pipeline.py).
 
 ---
@@ -148,7 +146,7 @@ Throughout this course, theoretical concepts are directly anchored to real-world
 ### 🎮 [Chapter 16: Reinforcement Learning & Sequential Decision Making](file:///e:/Downloads/ML_only/course/16_reinforcement_learning_foundations.md)
 - **Markov Decision Processes (MDP)**: States $\mathcal{S}$, Actions $\mathcal{A}$, Transition Probabilities $\mathcal{P}$, Rewards $\mathcal{R}$, Discount Factor $\gamma$.
 - **Bellman Equations**: State-value $V^\pi(s)$, Action-value $Q^\pi(s, a)$, Optimality Equations.
-- **Algorithms**: Q-Learning Temporal Difference, Deep Q-Networks (DQN - Experience Replay, Target Network $\theta^-$), Proximal Policy Optimization (PPO clipped surrogate), and Direct Preference Optimization (DPO / RLHF).
+- **Algorithms**: Q-Learning TD error, Deep Q-Networks (DQN - Experience Replay, Target Net $\theta^-$), PPO Clipped Surrogate $L^{\text{CLIP}}(\theta)$, DPO / RLHF.
 - *Repository Case Anchor*: Sequential recommendation discovery in [`src/recommendation/pipeline.py`](file:///e:/Downloads/ML_only/src/recommendation/pipeline.py).
 
 ---
@@ -159,3 +157,26 @@ Throughout this course, theoretical concepts are directly anchored to real-world
 - **Large Language Models (LLMs)**: Causal Decoder-only modeling ($P(w_t \mid w_{<t})$), Parameter-Efficient Fine-Tuning (**LoRA / QLoRA** low-rank matrix decomposition $W_0 + B \cdot A$).
 - **Retrieval-Augmented Generation (RAG)**: Chunking, Vector Database indexing, Cosine similarity search, and prompt context augmentation.
 - *Repository Case Anchor*: Text classification & key term extraction in [`src/document_classification/pipeline.py`](file:///e:/Downloads/ML_only/src/document_classification/pipeline.py).
+
+---
+
+### 🎨 [Chapter 18: Generative AI & Diffusion Models](file:///e:/Downloads/ML_only/course/18_generative_ai_and_diffusion_models.md)
+- **GANs**: Generative Adversarial Networks minimax game math $\min_G \max_D V(D, G)$, Mode Collapse, Wasserstein GAN with Gradient Penalty (WGAN-GP).
+- **Diffusion Models**: Forward Markov Noise process $q(x_t \mid x_{t-1})$, Reverse Denoising $p_\theta(x_{t-1} \mid x_t)$ predicting noise $\epsilon_\theta(x_t, t)$, Latent Diffusion (Stable Diffusion / ControlNet).
+- *Repository Case Anchor*: Visual inspection feature metrics in [`src/defect_detection/pipeline.py`](file:///e:/Downloads/ML_only/src/defect_detection/pipeline.py).
+
+---
+
+### 👁️ [Chapter 19: Computer Vision — Detection, Segmentation & ViTs](file:///e:/Downloads/ML_only/course/19_computer_vision_object_detection_segmentation.md)
+- **Object Detection**: Two-stage (Faster R-CNN, Region Proposals, Anchor boxes, IoU, NMS) vs. Single-stage (**YOLOv8**, Focal Loss).
+- **Segmentation**: U-Net architecture skip connections, Mask R-CNN, Segment Anything Model (**SAM**).
+- **Vision Transformers (ViT)**: Patchifying images into $16 \times 16$ visual tokens, positional embeddings, and ViT self-attention.
+- *Repository Case Anchor*: Quality inspection in [`src/defect_detection/pipeline.py`](file:///e:/Downloads/ML_only/src/defect_detection/pipeline.py).
+
+---
+
+### ⚖️ [Chapter 20: AI Ethics, Fairness & Safety Alignment](file:///e:/Downloads/ML_only/course/20_ai_ethics_fairness_and_safety_alignment.md)
+- **Algorithmic Fairness Metrics**: Demographic Parity, Equalized Odds, Equal Opportunity, Disparate Impact Ratio ($> 0.80$ rule).
+- **Bias Mitigation**: Pre-processing (re-weighing, adversarial sampling), In-processing (adversarial debiasing), Post-processing (threshold tuning).
+- **AI Safety & Alignment**: RLHF (Reinforcement Learning from Human Feedback), Constitutional AI, Red Teaming, and Guardrails (Llama Guard, NeMo Guardrails).
+- *Repository Case Anchor*: FCRA compliance in [`src/credit_risk/README.md`](file:///e:/Downloads/ML_only/src/credit_risk/README.md).
