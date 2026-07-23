@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Enterprise Production ML Suite | 12 AI Models</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo-icon">⚡</div>
+        <div class="brand-text">
+          <h1>Nexus ML</h1>
+          <span class="badge">Production Suite</span>
+        </div>
+      </div>
+
+      <div class="nav-section-title">12 PRODUCTION ML PIPELINES</div>
+      <nav class="nav-menu" id="navMenu">
+        <button class="nav-item active" data-pipeline="fraud_detection">
+          <span class="icon">🛡️</span> Fraud Detection
+        </button>
+        <button class="nav-item" data-pipeline="credit_risk">
+          <span class="icon">💳</span> Credit Risk
+        </button>
+        <button class="nav-item" data-pipeline="customer_churn">
+          <span class="icon">📉</span> Customer Churn
+        </button>
+        <button class="nav-item" data-pipeline="house_prices">
+          <span class="icon">🏡</span> House Price Valuation
+        </button>
+        <button class="nav-item" data-pipeline="recommendation">
+          <span class="icon">🎯</span> Recommendation System
+        </button>
+        <button class="nav-item" data-pipeline="demand_forecasting">
+          <span class="icon">📊</span> Demand Forecasting
+        </button>
+        <button class="nav-item" data-pipeline="predictive_maintenance">
+          <span class="icon">⚙️</span> Predictive Maintenance
+        </button>
+        <button class="nav-item" data-pipeline="medical_diagnosis">
+          <span class="icon">🩺</span> Medical Diagnosis
+        </button>
+        <button class="nav-item" data-pipeline="sentiment_analysis">
+          <span class="icon">💬</span> Sentiment Analysis
+        </button>
+        <button class="nav-item" data-pipeline="document_classification">
+          <span class="icon">📄</span> Document Classifier
+        </button>
+        <button class="nav-item" data-pipeline="defect_detection">
+          <span class="icon">🔍</span> CV Defect Inspection
+        </button>
+        <button class="nav-item" data-pipeline="customer_segmentation">
+          <span class="icon">🧩</span> Customer Segmentation
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="server-status">
+          <span class="status-dot green"></span> REST API: <strong id="apiStatusText">Connected</strong>
+        </div>
+        <a href="/docs" target="_blank" class="docs-link">📖 OpenAPI Specs (/docs)</a>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <!-- Top Header -->
+      <header class="top-header">
+        <div class="header-titles">
+          <h2 id="currentPipelineTitle">Fraud Detection</h2>
+          <p id="currentPipelineSubtitle">Real-time credit card transaction anomaly scoring & classification</p>
+        </div>
+        <div class="header-actions">
+          <button class="btn btn-secondary" id="btnLoadPreset">⚡ Load High Risk Preset</button>
+          <button class="btn btn-secondary" id="btnLoadNormalPreset">🟢 Load Normal Preset</button>
+          <button class="btn btn-primary" id="btnRunInference">🚀 Run Model Inference</button>
+        </div>
+      </header>
+
+      <!-- Grid Workspace -->
+      <div class="workspace-grid">
+        <!-- Input Panel -->
+        <section class="card input-card">
+          <div class="card-header">
+            <h3>Input Parameters</h3>
+            <span class="pill blue" id="taskTypeBadge">Classification</span>
+          </div>
+          <div class="card-body">
+            <form id="pipelineForm" class="form-grid">
+              <!-- Form inputs rendered dynamically by app.js -->
+            </form>
+          </div>
+        </section>
+
+        <!-- Results Panel -->
+        <section class="card results-card">
+          <div class="card-header">
+            <h3>Model Inference Result</h3>
+            <div class="execution-time" id="execTime">Ready</div>
+          </div>
+          <div class="card-body">
+            <!-- Visual Summary Widget -->
+            <div class="result-summary-widget" id="resultWidget">
+              <div class="empty-state">
+                <span class="empty-icon">🔮</span>
+                <p>Click "Run Model Inference" or load a preset to view live prediction results.</p>
+              </div>
+            </div>
+
+            <!-- JSON Output Details -->
+            <div class="json-inspector">
+              <div class="json-header">
+                <span>Raw Response Payload</span>
+                <button class="btn-copy" id="btnCopyJson">📋 Copy JSON</button>
+              </div>
+              <pre id="jsonOutput">{}</pre>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- Pipeline Performance Banner -->
+      <section class="metrics-banner card">
+        <div class="metrics-content">
+          <h4>Model Performance Metrics & Artifacts</h4>
+          <div class="metrics-pills" id="metricsPillsContainer">
+            <span class="metric-tag">Loading metrics...</span>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
