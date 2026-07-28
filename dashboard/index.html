@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/static/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
   <div class="app-container">
@@ -77,15 +78,22 @@
           <h2 id="currentPipelineTitle">Fraud Detection</h2>
           <p id="currentPipelineSubtitle">Real-time credit card transaction anomaly scoring & classification</p>
         </div>
-        <div class="header-actions">
-          <button class="btn btn-secondary" id="btnLoadPreset">⚡ Load High Risk Preset</button>
-          <button class="btn btn-secondary" id="btnLoadNormalPreset">🟢 Load Normal Preset</button>
-          <button class="btn btn-primary" id="btnRunInference">🚀 Run Model Inference</button>
+        <div class="header-right-group">
+          <div class="view-mode-tabs">
+            <button class="tab-btn active" id="tabWorkspace">⚡ Interactive Workspace</button>
+            <button class="tab-btn" id="tabReadme">📖 Architecture & README</button>
+            <button class="tab-btn" id="tabCourse">🎓 100-Chapter Course</button>
+          </div>
+          <div class="header-actions" id="headerActions">
+            <button class="btn btn-secondary" id="btnLoadPreset">⚡ Load High Risk Preset</button>
+            <button class="btn btn-secondary" id="btnLoadNormalPreset">🟢 Load Normal Preset</button>
+            <button class="btn btn-primary" id="btnRunInference">🚀 Run Model Inference</button>
+          </div>
         </div>
       </header>
 
       <!-- Grid Workspace -->
-      <div class="workspace-grid">
+      <div class="workspace-grid" id="workspaceGrid">
         <!-- Input Panel -->
         <section class="card input-card">
           <div class="card-header">
@@ -124,6 +132,59 @@
             </div>
           </div>
         </section>
+      </div>
+
+      <!-- README / Documentation View Card -->
+      <div class="readme-view-container" id="readmeViewContainer">
+        <section class="card readme-card">
+          <div class="card-header">
+            <div class="readme-header-left">
+              <h3 id="readmeTitle">Pipeline Documentation</h3>
+            </div>
+            <span class="pill blue" id="readmeFileBadge">README.md</span>
+          </div>
+          <div class="card-body markdown-body" id="readmeContent">
+            <div class="empty-state">
+              <span class="empty-icon">📄</span>
+              <p>Loading pipeline documentation...</p>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- Course Viewer Container -->
+      <div class="course-view-container hidden" id="courseViewContainer">
+        <div class="course-grid">
+          <!-- Course Navigation Sidebar -->
+          <aside class="card course-sidebar-card">
+            <div class="card-header">
+              <h3>Curriculum Topics</h3>
+              <span class="pill blue" id="courseTotalPill">100 Chapters</span>
+            </div>
+            <div class="course-search-container">
+              <input type="text" id="courseSearchInput" placeholder="🔍 Search 100 chapters..." class="course-search-input">
+            </div>
+            <div class="course-list" id="courseListContainer">
+              <div class="loading-text">Loading course chapters...</div>
+            </div>
+          </aside>
+
+          <!-- Course Reader Card -->
+          <section class="card course-reader-card">
+            <div class="card-header">
+              <div class="course-header-info">
+                <h3 id="courseTitleHeader">Course Curriculum & Overview</h3>
+                <span class="pill blue" id="courseFileBadge">course/README.md</span>
+              </div>
+            </div>
+            <div class="card-body markdown-body" id="courseMarkdownContent">
+              <div class="empty-state">
+                <span class="empty-icon">🎓</span>
+                <p>Loading course content...</p>
+              </div>
+            </div>
+          </section>
+        </div>
       </div>
 
       <!-- Pipeline Performance Banner -->

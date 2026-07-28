@@ -206,6 +206,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   let activePipelineKey = "fraud_detection";
+  const README_CACHE = {};
 
   // Elements
   const navMenu = document.getElementById("navMenu");
@@ -222,6 +223,217 @@ document.addEventListener("DOMContentLoaded", () => {
   const metricsContainer = document.getElementById("metricsPillsContainer");
   const btnCopyJson = document.getElementById("btnCopyJson");
 
+  // Course Elements
+  const tabCourse = document.getElementById("tabCourse");
+  const courseViewContainer = document.getElementById("courseViewContainer");
+  const courseListContainer = document.getElementById("courseListContainer");
+  const courseSearchInput = document.getElementById("courseSearchInput");
+  const courseTitleHeader = document.getElementById("courseTitleHeader");
+  const courseFileBadge = document.getElementById("courseFileBadge");
+  const courseMarkdownContent = document.getElementById("courseMarkdownContent");
+  const courseTotalPill = document.getElementById("courseTotalPill");
+
+  let ALL_COURSES = [];
+  const COURSE_CACHE = {};
+  let activeCourseKey = "README.md";
+
+  async function fetchCourseList() {
+    try {
+      const res = await fetch("/api/v1/courses");
+      if (!res.ok) return;
+      const data = await res.json();
+      ALL_COURSES = data.courses;
+      if (courseTotalPill) courseTotalPill.textContent = `${ALL_COURSES.length - 1} Chapters`;
+      renderCourseList(ALL_COURSES);
+      
+      // Load curriculum README or active chapter
+      fetchCourseContent(activeCourseKey, "Course Curriculum & Overview");
+    } catch (e) {
+      if (courseListContainer) {
+        courseListContainer.innerHTML = `<p class="error">Failed to load courses: ${e.message}</p>`;
+      }
+    }
+  }
+
+  function renderCourseList(courses) {
+    if (!courseListContainer) return;
+    courseListContainer.innerHTML = "";
+
+    courses.forEach(c => {
+      const item = document.createElement("button");
+      item.className = `course-item ${c.key === activeCourseKey ? "active" : ""}`;
+      item.textContent = c.title;
+      item.title = c.title;
+      item.dataset.key = c.key;
+
+      item.addEventListener("click", () => {
+        document.querySelectorAll(".course-item").forEach(el => el.classList.remove("active"));
+        item.classList.add("active");
+        activeCourseKey = c.key;
+        fetchCourseContent(c.key, c.title);
+      });
+
+      courseListContainer.appendChild(item);
+    });
+  }
+
+  if (courseSearchInput) {
+    courseSearchInput.addEventListener("input", (e) => {
+      const query = e.target.value.toLowerCase().trim();
+      const filtered = ALL_COURSES.filter(c => c.title.toLowerCase().includes(query) || c.key.toLowerCase().includes(query));
+      renderCourseList(filtered);
+    });
+  }
+
+  async function fetchCourseContent(courseKey, title) {
+    if (courseTitleHeader) courseTitleHeader.textContent = title || "Course Content";
+    if (courseFileBadge) courseFileBadge.textContent = `course/${courseKey}`;
+
+    if (COURSE_CACHE[courseKey]) {
+      renderCourseMarkdown(COURSE_CACHE[courseKey]);
+      return;
+    }
+
+    if (courseMarkdownContent) {
+      courseMarkdownContent.innerHTML = `
+        <div class="empty-state">
+          <span class="empty-icon">⏳</span>
+          <p>Loading course module...</p>
+        </div>
+      `;
+    }
+
+    try {
+      const res = await fetch(`/api/v1/courses/${courseKey}`);
+      if (!res.ok) {
+        if (courseMarkdownContent) courseMarkdownContent.innerHTML = `<p class="error">Failed to load chapter content.</p>`;
+        return;
+      }
+      const data = await res.json();
+      COURSE_CACHE[courseKey] = data.content;
+      renderCourseMarkdown(data.content);
+    } catch (e) {
+      if (courseMarkdownContent) courseMarkdownContent.innerHTML = `<p class="error">Error loading course: ${e.message}</p>`;
+    }
+  }
+
+  const readmeViewContainer = document.getElementById("readmeViewContainer");
+  const readmeContent = document.getElementById("readmeContent");
+  const readmeTitle = document.getElementById("readmeTitle");
+  const readmeFileBadge = document.getElementById("readmeFileBadge");
+
+  async function fetchPipelineReadme(pipelineKey) {
+    const config = PIPELINE_CONFIGS[pipelineKey];
+    if (readmeTitle && config) readmeTitle.textContent = `${config.title} Documentation`;
+    if (readmeFileBadge) readmeFileBadge.textContent = `src/${pipelineKey}/README.md`;
+
+    if (README_CACHE[pipelineKey]) {
+      renderReadmeMarkdown(README_CACHE[pipelineKey]);
+      return;
+    }
+
+    if (readmeContent) {
+      readmeContent.innerHTML = `
+        <div class="empty-state">
+          <span class="empty-icon">⏳</span>
+          <p>Loading README documentation for ${config ? config.title : pipelineKey}...</p>
+        </div>
+      `;
+    }
+
+    try {
+      const res = await fetch(`/api/v1/pipelines/${pipelineKey}/readme`);
+      if (!res.ok) {
+        if (readmeContent) readmeContent.innerHTML = `<p class="error">Failed to load documentation for ${pipelineKey}.</p>`;
+        return;
+      }
+      const data = await res.json();
+      README_CACHE[pipelineKey] = data.readme;
+      renderReadmeMarkdown(data.readme);
+    } catch (e) {
+      if (readmeContent) readmeContent.innerHTML = `<p class="error">Error loading README: ${e.message}</p>`;
+    }
+  }
+
+  function renderReadmeMarkdown(markdownText) {
+    if (!readmeContent) return;
+    try {
+      if (typeof window.marked === 'function') {
+        readmeContent.innerHTML = window.marked(markdownText);
+        return;
+      } else if (window.marked && typeof window.marked.parse === 'function') {
+        readmeContent.innerHTML = window.marked.parse(markdownText);
+        return;
+      }
+    } catch (e) {
+      console.warn("Marked parser failed, using fallback:", e);
+    }
+    readmeContent.innerHTML = parseMarkdownFallback(markdownText);
+  }
+
+  function renderCourseMarkdown(markdownText) {
+    if (!courseMarkdownContent) return;
+    try {
+      if (typeof window.marked === 'function') {
+        courseMarkdownContent.innerHTML = window.marked(markdownText);
+        return;
+      } else if (window.marked && typeof window.marked.parse === 'function') {
+        courseMarkdownContent.innerHTML = window.marked.parse(markdownText);
+        return;
+      }
+    } catch (e) {
+      console.warn("Marked parser failed, using fallback:", e);
+    }
+    courseMarkdownContent.innerHTML = parseMarkdownFallback(markdownText);
+  }
+
+  // View Mode Navigation
+  function switchMainView(mode) {
+    const headerActions = document.getElementById("headerActions");
+    if (mode === "course") {
+      tabWorkspace.classList.remove("active");
+      tabReadme.classList.remove("active");
+      if (tabCourse) tabCourse.classList.add("active");
+
+      workspaceGrid.classList.add("hidden");
+      readmeViewContainer.classList.add("hidden");
+      if (courseViewContainer) courseViewContainer.classList.remove("hidden");
+      if (headerActions) headerActions.classList.add("hidden");
+
+      if (ALL_COURSES.length === 0) {
+        fetchCourseList();
+      }
+    } else if (mode === "readme") {
+      tabWorkspace.classList.remove("active");
+      if (tabCourse) tabCourse.classList.remove("active");
+      tabReadme.classList.add("active");
+
+      workspaceGrid.classList.remove("hidden");
+      readmeViewContainer.classList.remove("hidden");
+      if (courseViewContainer) courseViewContainer.classList.add("hidden");
+      if (headerActions) headerActions.classList.remove("hidden");
+
+      if (readmeViewContainer) {
+        readmeViewContainer.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else {
+      tabReadme.classList.remove("active");
+      if (tabCourse) tabCourse.classList.remove("active");
+      tabWorkspace.classList.add("active");
+
+      workspaceGrid.classList.remove("hidden");
+      readmeViewContainer.classList.remove("hidden");
+      if (courseViewContainer) courseViewContainer.classList.add("hidden");
+      if (headerActions) headerActions.classList.remove("hidden");
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }
+
+  if (tabWorkspace) tabWorkspace.addEventListener("click", () => switchMainView("workspace"));
+  if (tabReadme) tabReadme.addEventListener("click", () => switchMainView("readme"));
+  if (tabCourse) tabCourse.addEventListener("click", () => switchMainView("course"));
+
   // Render Form for Active Pipeline
   function renderForm(pipelineKey) {
     activePipelineKey = pipelineKey;
@@ -230,6 +442,9 @@ document.addEventListener("DOMContentLoaded", () => {
     titleEl.textContent = config.title;
     subtitleEl.textContent = config.subtitle;
     taskTypeBadge.textContent = config.taskType;
+
+    // Load README for this pipeline
+    fetchPipelineReadme(pipelineKey);
 
     pipelineForm.innerHTML = "";
 
@@ -485,5 +700,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Initialize
   renderForm("fraud_detection");
+  fetchPipelineReadme("fraud_detection");
   fetchPipelineStatus();
 });

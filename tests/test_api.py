@@ -49,3 +49,28 @@ def test_predict_sentiment():
     response = client.post("/api/v1/predict/sentiment-analysis", json=payload)
     assert response.status_code == 200
     assert response.json()["result"]["sentiment"] == "POSITIVE"
+
+def test_pipeline_readme_endpoint():
+    response = client.get("/api/v1/pipelines/fraud_detection/readme")
+    assert response.status_code == 200
+    data = response.json()
+    assert data["key"] == "fraud_detection"
+    assert "Fraud Detection" in data["readme"]
+
+def test_pipeline_readme_not_found():
+    response = client.get("/api/v1/pipelines/unknown_pipeline/readme")
+    assert response.status_code == 404
+
+def test_list_courses():
+    response = client.get("/api/v1/courses")
+    assert response.status_code == 200
+    data = response.json()
+    assert data["total_courses"] > 0
+    assert any(c["key"] == "01_data_cleaning_and_preprocessing.md" for c in data["courses"])
+
+def test_get_course_content():
+    response = client.get("/api/v1/courses/01_data_cleaning_and_preprocessing.md")
+    assert response.status_code == 200
+    data = response.json()
+    assert "Data Cleaning" in data["content"]
+
