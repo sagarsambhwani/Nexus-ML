@@ -1,5 +1,6 @@
 from fastapi import APIRouter, HTTPException
 from typing import Dict, Any
+from config import BASE_DIR
 from api.schemas import (
     FraudDetectionRequest, CreditRiskRequest, CustomerChurnRequest,
     HousePriceRequest, RecommendationRequest, DemandForecastingRequest,
@@ -159,3 +160,63 @@ def list_pipelines():
             "metrics": metrics
         })
     return {"total_pipelines": len(status_list), "pipelines": status_list}
+
+
+@router.get("/pipelines/{pipeline_key}/readme")
+def get_pipeline_readme(pipeline_key: str):
+    readme_path = BASE_DIR / "src" / pipeline_key / "README.md"
+    if not readme_path.exists():
+        raise HTTPException(status_code=404, detail=f"README for pipeline '{pipeline_key}' not found.")
+    
+    with open(readme_path, "r", encoding="utf-8") as f:
+        content = f.read()
+        
+    return {"key": pipeline_key, "readme": content}
+
+
+@router.get("/courses")
+def list_courses():
+    course_dir = BASE_DIR / "course"
+    if not course_dir.exists():
+        raise HTTPException(status_code=404, detail="Course directory not found.")
+    
+    files = sorted([f.name for f in course_dir.glob("*.md")])
+    course_list = []
+    for f in files:
+        name_no_ext = f.replace(".md", "")
+        parts = name_no_ext.split("_", 1)
+        if len(parts) == 2 and parts[0].isdigit():
+            ch_num = parts[0]
+            title = parts[1].replace("_", " ").title()
+            display_title = f"Chapter {ch_num}: {title}"
+        elif f == "README.md":
+            display_title = "Course Curriculum & Overview"
+        else:
+            display_title = name_no_ext.replace("_", " ").title()
+            
+        course_list.append({
+            "key": f,
+            "filename": f,
+            "title": display_title
+        })
+        
+    return {"total_courses": len(course_list), "courses": course_list}
+
+
+@router.get("/courses/{course_key}")
+def get_course_content(course_key: str):
+    if ".." in course_key or "/" in course_key or "\\" in course_key:
+        raise HTTPException(status_code=400, detail="Invalid course key.")
+        
+    if not course_key.endswith(".md"):
+        course_key += ".md"
+        
+    course_path = BASE_DIR / "course" / course_key
+    if not course_path.exists():
+        raise HTTPException(status_code=404, detail=f"Course chapter '{course_key}' not found.")
+        
+    with open(course_path, "r", encoding="utf-8") as f:
+        content = f.read()
+        
+    return {"key": course_key, "content": content}
+
