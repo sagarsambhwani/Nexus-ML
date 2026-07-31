@@ -11,8 +11,13 @@ This pipeline utilizes a **Patch-Based Image Feature Extraction Classifier** ope
 
 Implemented in [`pipeline.py`](file:///e:/Downloads/Nexus-ML/src/defect_detection/pipeline.py) as a subclass of `BasePipeline`:
 
-```
-Surface Image Patch Metrics -> Feature Structuring -> Random Forest Classifier -> Defect Class + Severity Grade + QC Pass/Fail Verdict
+```mermaid
+graph TD
+    A[Surface Image Patch Metrics] --> B[Feature Structuring]
+    B[Feature Structuring] --> C[Random Forest Classifier]
+    C[Random Forest Classifier] --> D[Defect Class + Severity Grade + QC Pass/Fail Verdict]
+    style A fill:#f9f,stroke:#333,stroke-width:2px
+    style D fill:#bbf,stroke:#333,stroke-width:2px
 ```
 
 ### Class Code Structure & Execution Flow:
@@ -43,6 +48,41 @@ class DefectDetectionPipeline(BasePipeline):
      - `CRACK_FRACTURE` $\rightarrow$ `CRITICAL (Grade 4)` $\rightarrow$ `quality_control_passed = False`
      - `SURFACE_SCRATCH` / `CORROSION_STAIN` $\rightarrow$ `MINOR (Grade 2)` $\rightarrow$ `quality_control_passed = False`
      - `NO_DEFECT` $\rightarrow$ `NONE (Grade 0)` $\rightarrow$ `quality_control_passed = True`
+
+---
+
+
+## 💻 API Usage Example
+
+**Endpoint:** `POST /api/v1/predict/defect-detection`
+
+```bash
+curl -X 'POST' \
+  'http://localhost:8000/api/v1/predict/defect-detection' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "mean_intensity": 110.0,
+  "std_intensity": 35.2,
+  "edge_pixel_density": 0.22,
+  "contrast_ratio": 5.1,
+  "surface_roughness": 4.2,
+  "anomaly_patch_max": 0.82
+}'
+```
+
+**Expected JSON Response:**
+```json
+{
+  "pipeline": "Defect Detection",
+  "status": "success",
+  "result": {
+    "defect_type": "Surface Scratch",
+    "severity": "High",
+    "qc_status": "FAIL"
+  }
+}
+```
 
 ---
 
