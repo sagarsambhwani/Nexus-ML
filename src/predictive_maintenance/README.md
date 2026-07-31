@@ -11,8 +11,13 @@ This pipeline utilizes a **Random Forest Classifier** operating on vibration, te
 
 Implemented in [`pipeline.py`](file:///e:/Downloads/Nexus-ML/src/predictive_maintenance/pipeline.py) as a subclass of `BasePipeline`:
 
-```
-IIoT Sensor Stream -> Feature Structuring -> Random Forest Classifier -> Failure Risk Prob + RUL Hours Estimation + Maintenance Recommendation
+```mermaid
+graph TD
+    A[IIoT Sensor Stream] --> B[Feature Structuring]
+    B[Feature Structuring] --> C[Random Forest Classifier]
+    C[Random Forest Classifier] --> D[Failure Risk Prob + RUL Hours Estimation + Maintenance Recommendation]
+    style A fill:#f9f,stroke:#333,stroke-width:2px
+    style D fill:#bbf,stroke:#333,stroke-width:2px
 ```
 
 ### Class Code Structure & Execution Flow:
@@ -42,6 +47,41 @@ class PredictiveMaintenancePipeline(BasePipeline):
      - $P \ge 0.65 \rightarrow$ `CRITICAL` $\rightarrow$ *Immediate shutdown required. Schedule technician for component overhaul.*
      - $0.35 \le P < 0.65 \rightarrow$ `WARNING` $\rightarrow$ *Schedule preventative maintenance within 48 hours.*
      - $P < 0.35 \rightarrow$ `HEALTHY` $\rightarrow$ *System operating within optimal parameters.*
+
+---
+
+
+## 💻 API Usage Example
+
+**Endpoint:** `POST /api/v1/predict/predictive-maintenance`
+
+```bash
+curl -X 'POST' \
+  'http://localhost:8000/api/v1/predict/predictive-maintenance' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "vibration_hz": 68.5,
+  "temperature_c": 92.3,
+  "pressure_psi": 78.0,
+  "rpm": 2800,
+  "sensor_noise_std": 3.2,
+  "operating_hours": 6500
+}'
+```
+
+**Expected JSON Response:**
+```json
+{
+  "pipeline": "Predictive Maintenance",
+  "status": "success",
+  "result": {
+    "failure_probability": 0.78,
+    "rul_hours": 45,
+    "status": "CRITICAL_WARNING"
+  }
+}
+```
 
 ---
 
