@@ -8,7 +8,11 @@ Throughout this course, theoretical concepts are directly anchored to real-world
 
 ---
 
-## 📖 Curriculum Syllabus (10 Volumes, 100 Chapters)
+## 📖 Curriculum Syllabus (10 Volumes, 101 Chapters)
+
+**Jump to Volume:**
+[Vol 1: Foundations](#-volume-1-foundations-cleaning-feature-engineering--linear-models-ch-1---10) | [Vol 2: Advanced DL](#-volume-2-advanced-deep-learning--optimization-ch-11---20) | [Vol 3: Multi-Modal](#-volume-3-multi-modal-privacy--agentic-ai-ch-21---30) | [Vol 4: Frontier Computing](#-volume-4-frontier-computing--physics-informed-ai-ch-31---40) | [Vol 5: Time-Series](#-volume-5-classical--deep-time-series-anomaly--spatial-ml-ch-41---50)  
+[Vol 6: Graph & RL](#-volume-6-graph-relational-reinforcement--causal-ai-ch-51---60) | [Vol 7: NLP & LLMs](#-volume-7-nlp-llm-architectures--vector-search-ch-61---70) | [Vol 8: Vision & GenAI](#-volume-8-vision-generative--speech-foundation-models-ch-71---80) | [Vol 9: Optimization](#-volume-9-optimization-feature-selection--representation-learning-ch-81---90) | [Vol 10: Systems & AGI](#-volume-10-scale-systems--agi-frontiers-ch-91---100)
 
 ### 📦 Volume 1: Foundations, Cleaning, Feature Engineering & Linear Models (Ch 1 - 10)
 - **Ch 01**: Data Cleaning, Imputation & Leakage Prevention

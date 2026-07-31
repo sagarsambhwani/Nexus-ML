@@ -11,8 +11,13 @@ This pipeline utilizes a **TF-IDF (Term Frequency-Inverse Document Frequency) Un
 
 Implemented in [`pipeline.py`](file:///e:/Downloads/Nexus-ML/src/sentiment_analysis/pipeline.py) as a subclass of `BasePipeline`:
 
-```
-Raw Review Text -> TF-IDF Unigram/Bigram Feature Extraction -> Logistic Classifier -> Sentiment Category + Confidence Score + Composite Score (-1 to +1)
+```mermaid
+graph TD
+    A[Raw Review Text] --> B[TF-IDF Unigram/Bigram Feature Extraction]
+    B[TF-IDF Unigram/Bigram Feature Extraction] --> C[Logistic Classifier]
+    C[Logistic Classifier] --> D[Sentiment Category + Confidence Score + Composite Score (-1 to +1)]
+    style A fill:#f9f,stroke:#333,stroke-width:2px
+    style D fill:#bbf,stroke:#333,stroke-width:2px
 ```
 
 ### Class Code Structure & Execution Flow:
@@ -39,6 +44,35 @@ class SentimentAnalysisPipeline(BasePipeline):
    - Predicts primary sentiment label and confidence percentage.
    - Derives continuous **Composite Sentiment Score**:
      $$\text{CompositeScore} = P(\text{POSITIVE}) - P(\text{NEGATIVE}) \in [-1.0, +1.0]$$
+
+---
+
+
+## 💻 API Usage Example
+
+**Endpoint:** `POST /api/v1/predict/sentiment-analysis`
+
+```bash
+curl -X 'POST' \
+  'http://localhost:8000/api/v1/predict/sentiment-analysis' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "text": "The product exceeded my expectations! Super fast delivery and great quality."
+}'
+```
+
+**Expected JSON Response:**
+```json
+{
+  "pipeline": "Sentiment Analysis",
+  "status": "success",
+  "result": {
+    "sentiment": "Positive",
+    "score": 0.96
+  }
+}
+```
 
 ---
 

@@ -11,8 +11,13 @@ This pipeline utilizes a **Sublinear TF-IDF N-gram Vectorizer** paired with a **
 
 Implemented in [`pipeline.py`](file:///e:/Downloads/Nexus-ML/src/document_classification/pipeline.py) as a subclass of `BasePipeline`:
 
-```
-Raw Unstructured Text -> Sublinear TF-IDF Feature Extractor -> Multinomial Naive Bayes -> Category Class + Probability Distribution + Key Domain Keywords
+```mermaid
+graph TD
+    A[Raw Unstructured Text] --> B[Sublinear TF-IDF Feature Extractor]
+    B[Sublinear TF-IDF Feature Extractor] --> C[Multinomial Naive Bayes]
+    C[Multinomial Naive Bayes] --> D[Category Class + Probability Distribution + Key Domain Keywords]
+    style A fill:#f9f,stroke:#333,stroke-width:2px
+    style D fill:#bbf,stroke:#333,stroke-width:2px
 ```
 
 ### Class Code Structure & Execution Flow:
@@ -43,6 +48,40 @@ class DocumentClassificationPipeline(BasePipeline):
    - Computes posterior probability distribution $P(C_k \mid D) \propto P(C_k) \prod P(w_i \mid C_k)$.
    - Identifies highest probability category $C_{\text{best}}$ and confidence score.
    - Extracts top 5 document keyword features driving classification based on non-zero TF-IDF weights.
+
+---
+
+
+## 💻 API Usage Example
+
+**Endpoint:** `POST /api/v1/predict/document-classification`
+
+```bash
+curl -X 'POST' \
+  'http://localhost:8000/api/v1/predict/document-classification' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "text": "Senior Software Engineer with 6 years experience in Python, Docker, Kubernetes, microservices, and FastAPI backend development."
+}'
+```
+
+**Expected JSON Response:**
+```json
+{
+  "pipeline": "Document Classification",
+  "status": "success",
+  "result": {
+    "category": "Technology/Engineering",
+    "confidence": 0.94,
+    "keywords": [
+      "Python",
+      "Docker",
+      "FastAPI"
+    ]
+  }
+}
+```
 
 ---
 

@@ -1,5 +1,10 @@
 # ⚡ Nexus ML — Enterprise Production Machine Learning Suite
 
+![Python Version](https://img.shields.io/badge/python-3.10%2B-blue?style=flat-square)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.100%2B-009688?style=flat-square&logo=fastapi)
+![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)
+![Build](https://img.shields.io/badge/build-passing-brightgreen?style=flat-square)
+
 > **12 Production-Ready Machine Learning & Artificial Intelligence Use Cases in ONE Unified Repository.**
 > 
 > Spanning Classification, Regression, Recommendation Systems, Time-Series Demand Forecasting, Predictive Telemetry, Healthcare Diagnostics, Natural Language Processing (NLP), Computer Vision, and Unsupervised Clustering.
@@ -21,18 +26,18 @@
 
 | # | Domain / Topic | Machine Learning Task | Model Architecture & Feature Engineering | Primary Outputs |
 |---|---|---|---|---|
-| 1 | **Fraud Detection** | Classification | Random Forest / XGBoost + Velocity & Anomaly features | Fraud Prob, Alert Status, Risk Factors |
-| 2 | **Credit Risk Prediction** | Classification | Calibrated Logistic Scorecard + Standard Scaler | Default Prob, Risk Tier (AAA-CCC), Decision |
-| 3 | **Customer Churn** | Classification | Gradient Boosting + Tenure, Support Tickets, Contract | Churn Prob, Retention Action |
-| 4 | **House Price Valuation** | Regression | Gradient Boosting + SqFt, Geo Score, Age, Amenities | Predicted Price ($), Price Bounds |
-| 5 | **Recommendation System** | Hybrid Filter | TruncatedSVD Matrix Factorization + Content Filters | Top-K Items, Match Score %, Reason |
-| 6 | **Demand Forecasting** | Time Series | Lag Feature Regressor + Day of Week, Seasonality | Daily Forecast Units, Confidence Bounds |
-| 7 | **Predictive Maintenance** | Telemetry / Class. | Random Forest + Sensor Vibration, Temp, Pressure, RPM | Failure Prob, RUL Hours, Status |
-| 8 | **Medical Diagnosis Support** | Healthcare Class. | Calibrated Logistic Classifier + Biomarkers | Disease Risk, Elevated Biomarkers, Guidance |
-| 9 | **Sentiment Analysis** | NLP Classification | TF-IDF (Unigram/Bigram) + Logistic Classifier | Sentiment (Pos/Neu/Neg), Score |
-| 10 | **Document Classification** | NLP Multi-class | TF-IDF + Multinomial Naive Bayes / Softmax | Doc Category, Keywords Extracted |
-| 11 | **Defect Detection** | Computer Vision | Visual Patch Texture & Anomaly Feature Classifier | Defect Type, Severity Grade, QC Status |
-| 12 | **Customer Segmentation** | Clustering | StandardScaler + K-Means (K=4) + PCA 2D Mapper | Cluster ID, Persona Name, Strategy |
+| 1 | [**Fraud Detection**](src/fraud_detection/README.md) | Classification | Random Forest / XGBoost + Velocity & Anomaly features | Fraud Prob, Alert Status, Risk Factors |
+| 2 | [**Credit Risk Prediction**](src/credit_risk/README.md) | Classification | Calibrated Logistic Scorecard + Standard Scaler | Default Prob, Risk Tier (AAA-CCC), Decision |
+| 3 | [**Customer Churn**](src/customer_churn/README.md) | Classification | Gradient Boosting + Tenure, Support Tickets, Contract | Churn Prob, Retention Action |
+| 4 | [**House Price Valuation**](src/house_prices/README.md) | Regression | Gradient Boosting + SqFt, Geo Score, Age, Amenities | Predicted Price ($), Price Bounds |
+| 5 | [**Recommendation System**](src/recommendation/README.md) | Hybrid Filter | TruncatedSVD Matrix Factorization + Content Filters | Top-K Items, Match Score %, Reason |
+| 6 | [**Demand Forecasting**](src/demand_forecasting/README.md) | Time Series | Lag Feature Regressor + Day of Week, Seasonality | Daily Forecast Units, Confidence Bounds |
+| 7 | [**Predictive Maintenance**](src/predictive_maintenance/README.md) | Telemetry / Class. | Random Forest + Sensor Vibration, Temp, Pressure, RPM | Failure Prob, RUL Hours, Status |
+| 8 | [**Medical Diagnosis Support**](src/medical_diagnosis/README.md) | Healthcare Class. | Calibrated Logistic Classifier + Biomarkers | Disease Risk, Elevated Biomarkers, Guidance |
+| 9 | [**Sentiment Analysis**](src/sentiment_analysis/README.md) | NLP Classification | TF-IDF (Unigram/Bigram) + Logistic Classifier | Sentiment (Pos/Neu/Neg), Score |
+| 10 | [**Document Classification**](src/document_classification/README.md) | NLP Multi-class | TF-IDF + Multinomial Naive Bayes / Softmax | Doc Category, Keywords Extracted |
+| 11 | [**Defect Detection**](src/defect_detection/README.md) | Computer Vision | Visual Patch Texture & Anomaly Feature Classifier | Defect Type, Severity Grade, QC Status |
+| 12 | [**Customer Segmentation**](src/customer_segmentation/README.md) | Clustering | StandardScaler + K-Means (K=4) + PCA 2D Mapper | Cluster ID, Persona Name, Strategy |
 
 ---
 

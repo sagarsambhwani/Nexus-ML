@@ -11,8 +11,14 @@ This pipeline utilizes a **Gradient Boosting Classifier** to calculate individua
 
 Implemented in [`pipeline.py`](file:///e:/Downloads/Nexus-ML/src/customer_churn/pipeline.py) as a subclass of `BasePipeline`:
 
-```
-Subscriber Data -> Feature Structuring -> Gradient Boosting Trees -> Churn Probability -> Automated Retention Strategy Engine
+```mermaid
+graph TD
+    A[Subscriber Data] --> B[Feature Structuring]
+    B[Feature Structuring] --> C[Gradient Boosting Trees]
+    C[Gradient Boosting Trees] --> D[Churn Probability]
+    D[Churn Probability] --> E[Automated Retention Strategy Engine]
+    style A fill:#f9f,stroke:#333,stroke-width:2px
+    style E fill:#bbf,stroke:#333,stroke-width:2px
 ```
 
 ### Class Code Structure & Execution Flow:
@@ -41,6 +47,40 @@ class CustomerChurnPipeline(BasePipeline):
      - High Churn + Month-to-Month Contract $\rightarrow$ *Offer 15% discount for 12-month lock-in*
      - High Churn + $\ge 3$ Support Tickets $\rightarrow$ *Assign dedicated customer success manager*
      - High Churn + Low Tickets $\rightarrow$ *Send gift card & loyalty perk*
+
+---
+
+
+## 💻 API Usage Example
+
+**Endpoint:** `POST /api/v1/predict/customer-churn`
+
+```bash
+curl -X 'POST' \
+  'http://localhost:8000/api/v1/predict/customer-churn' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "tenure": 6,
+  "monthly_charges": 89.9,
+  "total_charges": 539.4,
+  "contract_type": 0,
+  "support_tickets": 4,
+  "paperless_billing": 1
+}'
+```
+
+**Expected JSON Response:**
+```json
+{
+  "pipeline": "Customer Churn Prediction",
+  "status": "success",
+  "result": {
+    "churn_probability": 0.85,
+    "retention_action": "High Risk - Offer Discount"
+  }
+}
+```
 
 ---
 
