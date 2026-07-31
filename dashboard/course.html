@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nexus ML Academy | 101-Chapter Masterclass</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body class="course-page-body">
+  <div class="app-container">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo-icon">🎓</div>
+        <div class="brand-text">
+          <h1>Nexus Academy</h1>
+          <span class="badge" style="background: rgba(216, 180, 254, 0.2); color: #d8b4fe;">101 Chapters</span>
+        </div>
+      </div>
+
+      <div class="nav-section-title">CURRICULUM MODULES</div>
+      
+      <div class="course-search-box" style="padding: 12px 16px;">
+        <input type="text" id="courseSearchInput" placeholder="🔍 Search chapters..." class="course-search-input" style="width: 100%; padding: 8px 12px; border-radius: 8px; background: rgba(0,0,0,0.3); border: 1px solid var(--border-color); color: #fff; font-family: inherit; font-size: 13px;">
+      </div>
+
+      <nav class="nav-menu course-sidebar-menu" id="courseListContainer" style="overflow-y: auto; flex: 1; padding: 0 12px 12px;">
+        <div class="loading-text" style="color: var(--text-dim); padding: 12px; font-size: 13px;">Loading curriculum...</div>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="server-status" style="margin-bottom: 6px;">
+          <span class="status-dot green" id="courseStatusDot"></span> Course Service: <strong id="courseStatusText" style="color: #6ee7b7;">Port 8001 Active</strong>
+        </div>
+        <div style="margin-top: 8px;">
+          <a href="http://localhost:8000" class="docs-link" style="display: flex; align-items: center; gap: 6px;">⚡ Switch to ML Dashboard (:8000)</a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Reader Area -->
+    <main class="main-content">
+      <!-- Top Header Bar -->
+      <header class="top-header">
+        <div class="header-titles">
+          <h2 id="courseTitleHeader">Course Curriculum & Overview</h2>
+          <div style="display: flex; gap: 8px; margin-top: 6px;">
+            <span class="pill purple" id="courseFileBadge">Course Service (:8001) / course/README.md</span>
+            <span class="pill blue" id="chapterCountBadge">101 Total Modules</span>
+          </div>
+        </div>
+        <div class="header-right-group">
+          <a href="http://localhost:8000" class="btn btn-primary" style="text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+            ⚡ Open ML Models Dashboard (:8000)
+          </a>
+        </div>
+      </header>
+
+      <!-- Reader Card -->
+      <section class="card course-reader-card" style="flex: 1; display: flex; flex-direction: column;">
+        <div class="card-header">
+          <h3 id="currentChapterName">Chapter Overview</h3>
+          <div class="header-actions">
+            <button class="btn btn-secondary" id="btnPrevChapter" style="padding: 6px 12px; font-size: 12px;">← Previous</button>
+            <button class="btn btn-secondary" id="btnNextChapter" style="padding: 6px 12px; font-size: 12px;">Next →</button>
+          </div>
+        </div>
+        <div class="card-body markdown-body" id="courseMarkdownContent" style="max-height: calc(100vh - 200px); overflow-y: auto;">
+          <div class="empty-state">
+            <span class="empty-icon">📖</span>
+            <p>Loading course content from Course Microservice...</p>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="/static/course_app.js"></script>
+</body>
+</html>
