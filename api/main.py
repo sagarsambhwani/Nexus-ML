@@ -38,11 +38,18 @@ def read_root():
     if index_file.exists():
         return FileResponse(index_file)
     return {
-        "message": "Welcome to Enterprise ML Suite API",
+        "message": "Welcome to Nexus-ML Unified API — use /docs for ML Service or /api/v1/courses for Course Service",
+        "ml_service": "http://localhost:8000",
+        "course_service": "http://localhost:8001",
         "docs": "/docs",
         "health": "/health"
     }
 
 @app.get("/health")
 def health_check():
-    return {"status": "healthy", "service": "Enterprise ML Suite", "total_models": 12}
+    return {
+        "status": "healthy",
+        "service": "Nexus-ML Unified Monolith",
+        "total_models": 12,
+        "note": "For microservice deployments use api.ml_service.main:app (8000) and api.course_service.main:app (8001)"
+    }
