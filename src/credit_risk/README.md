@@ -9,7 +9,7 @@ This pipeline implements a **Standardized Logistic Regression Scorecard** model 
 
 ## 🏗️ Deep-Dive Implementation Architecture
 
-Implemented in [`pipeline.py`](file:///e:/Downloads/ML_only/src/credit_risk/pipeline.py) as a subclass of `BasePipeline`:
+Implemented in [`pipeline.py`](file:///e:/Downloads/Nexus-ML/src/credit_risk/pipeline.py) as a subclass of `BasePipeline`:
 
 ```
 Borrower Input -> Pydantic Validation -> StandardScaler Transformation -> Logistic Regression -> Probability Scorecard -> Risk Tier & Underwriting Decision

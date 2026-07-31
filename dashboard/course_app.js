@@ -12,9 +12,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const COURSE_CACHE = {};
   let activeIndex = 0;
 
+  // Configurable base URL — defaults to the host serving this page (port 8001)
+  const COURSE_BASE_URL = window.location.origin;
+
   async function fetchCourseList() {
     try {
-      const res = await fetch("/api/v1/courses");
+      const res = await fetch(`${COURSE_BASE_URL}/api/v1/courses`);
       if (!res.ok) return;
       const data = await res.json();
       ALL_COURSES = data.courses;
@@ -34,9 +37,12 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!courseListContainer) return;
     courseListContainer.innerHTML = "";
 
-    courses.forEach((c, idx) => {
+    // Fix: compare by key, not by filtered array index, so highlight survives search filtering
+    const activeKey = ALL_COURSES[activeIndex]?.key;
+    courses.forEach((c) => {
+      const isActive = c.key === activeKey;
       const item = document.createElement("button");
-      item.className = `nav-item ${idx === activeIndex ? "active" : ""}`;
+      item.className = `nav-item ${isActive ? "active" : ""}`;
       item.style.width = "100%";
       item.style.textAlign = "left";
       item.style.marginBottom = "4px";
@@ -45,8 +51,8 @@ document.addEventListener("DOMContentLoaded", () => {
       item.style.borderRadius = "8px";
       item.style.border = "1px solid transparent";
       item.style.cursor = "pointer";
-      item.style.background = idx === activeIndex ? "rgba(216, 180, 254, 0.2)" : "transparent";
-      item.style.color = idx === activeIndex ? "#ffffff" : "var(--text-muted)";
+      item.style.background = isActive ? "rgba(216, 180, 254, 0.2)" : "transparent";
+      item.style.color = isActive ? "#ffffff" : "var(--text-muted)";
       item.innerHTML = `<span class="icon">📖</span> ${c.title}`;
       item.title = c.title;
 
@@ -94,7 +100,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     try {
-      const res = await fetch(`/api/v1/courses/${courseKey}`);
+      const res = await fetch(`${COURSE_BASE_URL}/api/v1/courses/${courseKey}`);
       if (!res.ok) {
         if (courseMarkdownContent) courseMarkdownContent.innerHTML = `<p class="error">Failed to load chapter content.</p>`;
         return;

@@ -26,6 +26,10 @@ COPY . .
 RUN python scripts/train_all.py
 
 EXPOSE 8000
+EXPOSE 8001
 
-# Run FastAPI app with Uvicorn server
-CMD ["uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "2"]
+# NOTE: docker-compose.yml overrides this CMD for each microservice.
+# Default boots the ML Dashboard Microservice.
+# To run Course Service: override CMD with:
+#   uvicorn api.course_service.main:app --host 0.0.0.0 --port 8001
+CMD ["uvicorn", "api.ml_service.main:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "2"]

@@ -9,7 +9,7 @@ This pipeline implements an autoregressive **Lag-Feature Gradient Boosting Model
 
 ## 🏗️ Deep-Dive Implementation Architecture
 
-Implemented in [`pipeline.py`](file:///e:/Downloads/ML_only/src/demand_forecasting/pipeline.py) as a subclass of `BasePipeline`:
+Implemented in [`pipeline.py`](file:///e:/Downloads/Nexus-ML/src/demand_forecasting/pipeline.py) as a subclass of `BasePipeline`:
 
 ```
 Time-Series Sales Stream -> Autoregressive Feature Extraction (Lags & Moving Averages) -> Gradient Boosting Regressor -> Recursive Multi-Step Forecast Horizon

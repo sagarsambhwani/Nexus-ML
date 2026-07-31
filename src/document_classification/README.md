@@ -9,7 +9,7 @@ This pipeline utilizes a **Sublinear TF-IDF N-gram Vectorizer** paired with a **
 
 ## 🏗️ Deep-Dive Implementation Architecture
 
-Implemented in [`pipeline.py`](file:///e:/Downloads/ML_only/src/document_classification/pipeline.py) as a subclass of `BasePipeline`:
+Implemented in [`pipeline.py`](file:///e:/Downloads/Nexus-ML/src/document_classification/pipeline.py) as a subclass of `BasePipeline`:
 
 ```
 Raw Unstructured Text -> Sublinear TF-IDF Feature Extractor -> Multinomial Naive Bayes -> Category Class + Probability Distribution + Key Domain Keywords

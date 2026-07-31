@@ -9,7 +9,7 @@ This pipeline implements an ensemble **Random Forest Classifier** trained on tra
 
 ## 🏗️ Deep-Dive Implementation Architecture
 
-The core pipeline is implemented in [`pipeline.py`](file:///e:/Downloads/ML_only/src/fraud_detection/pipeline.py) as a subclass of `BasePipeline`:
+The core pipeline is implemented in [`pipeline.py`](file:///e:/Downloads/Nexus-ML/src/fraud_detection/pipeline.py) as a subclass of `BasePipeline`:
 
 ```
 Incoming Request -> Pydantic Schema Validation -> Data Normalization -> Random Forest Model -> Risk Calibration -> Output Payload

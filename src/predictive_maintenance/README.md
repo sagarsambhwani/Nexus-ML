@@ -9,7 +9,7 @@ This pipeline utilizes a **Random Forest Classifier** operating on vibration, te
 
 ## 🏗️ Deep-Dive Implementation Architecture
 
-Implemented in [`pipeline.py`](file:///e:/Downloads/ML_only/src/predictive_maintenance/pipeline.py) as a subclass of `BasePipeline`:
+Implemented in [`pipeline.py`](file:///e:/Downloads/Nexus-ML/src/predictive_maintenance/pipeline.py) as a subclass of `BasePipeline`:
 
 ```
 IIoT Sensor Stream -> Feature Structuring -> Random Forest Classifier -> Failure Risk Prob + RUL Hours Estimation + Maintenance Recommendation

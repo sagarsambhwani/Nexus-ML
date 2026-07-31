@@ -9,7 +9,7 @@ This pipeline utilizes a **Gradient Boosting Classifier** to calculate individua
 
 ## 🏗️ Deep-Dive Implementation Architecture
 
-Implemented in [`pipeline.py`](file:///e:/Downloads/ML_only/src/customer_churn/pipeline.py) as a subclass of `BasePipeline`:
+Implemented in [`pipeline.py`](file:///e:/Downloads/Nexus-ML/src/customer_churn/pipeline.py) as a subclass of `BasePipeline`:
 
 ```
 Subscriber Data -> Feature Structuring -> Gradient Boosting Trees -> Churn Probability -> Automated Retention Strategy Engine

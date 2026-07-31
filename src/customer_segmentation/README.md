@@ -9,7 +9,7 @@ This pipeline combines **StandardScaler Preprocessing**, **K-Means Clustering ($
 
 ## 🏗️ Deep-Dive Implementation Architecture
 
-Implemented in [`pipeline.py`](file:///e:/Downloads/ML_only/src/customer_segmentation/pipeline.py) as a subclass of `BasePipeline`:
+Implemented in [`pipeline.py`](file:///e:/Downloads/Nexus-ML/src/customer_segmentation/pipeline.py) as a subclass of `BasePipeline`:
 
 ```
 Customer RFM Behavioral Vector -> StandardScaler -> K-Means Clustering (K=4) + PCA 2D Mapper -> Assigned Persona & Targeted Marketing Strategy

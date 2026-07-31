@@ -8,8 +8,8 @@ from api.routes import router as api_router
 from config import BASE_DIR
 
 app = FastAPI(
-    title="Enterprise Multi-Model Production ML Suite",
-    description="Unified API & Interactive Dashboard for 12 End-to-End Production ML Pipelines",
+    title="Nexus-ML Unified Monolith API",
+    description="Legacy unified entry point mounting both ML Dashboard Microservice and Course Microservice routers. For independent microservice deployments, use api.ml_service.main:app (Port 8000) or api.course_service.main:app (Port 8001).",
     version="1.0.0",
     docs_url="/docs",
     redoc_url="/redoc"
@@ -38,11 +38,18 @@ def read_root():
     if index_file.exists():
         return FileResponse(index_file)
     return {
-        "message": "Welcome to Enterprise ML Suite API",
+        "message": "Welcome to Nexus-ML Unified API — use /docs for ML Service or /api/v1/courses for Course Service",
+        "ml_service": "http://localhost:8000",
+        "course_service": "http://localhost:8001",
         "docs": "/docs",
         "health": "/health"
     }
 
 @app.get("/health")
 def health_check():
-    return {"status": "healthy", "service": "Enterprise ML Suite", "total_models": 12}
+    return {
+        "status": "healthy",
+        "service": "Nexus-ML Unified Monolith",
+        "total_models": 12,
+        "note": "For microservice deployments use api.ml_service.main:app (8000) and api.course_service.main:app (8001)"
+    }

@@ -9,7 +9,7 @@ This pipeline implements a **Standardized Calibrated Logistic Classifier** that 
 
 ## 🏗️ Deep-Dive Implementation Architecture
 
-Implemented in [`pipeline.py`](file:///e:/Downloads/ML_only/src/medical_diagnosis/pipeline.py) as a subclass of `BasePipeline`:
+Implemented in [`pipeline.py`](file:///e:/Downloads/Nexus-ML/src/medical_diagnosis/pipeline.py) as a subclass of `BasePipeline`:
 
 ```
 Patient Clinical Inputs -> Pydantic Schema Check -> StandardScaler Transformation -> Logistic Classifier -> Disease Risk Probability + Biomarker Flags + Clinical Guidance

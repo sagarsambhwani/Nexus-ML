@@ -9,7 +9,7 @@ This pipeline employs a **Gradient Boosting Regressor** to predict property fair
 
 ## 🏗️ Deep-Dive Implementation Architecture
 
-Implemented in [`pipeline.py`](file:///e:/Downloads/ML_only/src/house_prices/pipeline.py) as a subclass of `BasePipeline`:
+Implemented in [`pipeline.py`](file:///e:/Downloads/Nexus-ML/src/house_prices/pipeline.py) as a subclass of `BasePipeline`:
 
 ```
 Property Attributes -> Feature Alignment -> Gradient Boosting Regressor -> Fair Market Value ($) + SqFt Metric + 95% Valuation Interval

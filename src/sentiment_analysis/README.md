@@ -9,7 +9,7 @@ This pipeline utilizes a **TF-IDF (Term Frequency-Inverse Document Frequency) Un
 
 ## 🏗️ Deep-Dive Implementation Architecture
 
-Implemented in [`pipeline.py`](file:///e:/Downloads/ML_only/src/sentiment_analysis/pipeline.py) as a subclass of `BasePipeline`:
+Implemented in [`pipeline.py`](file:///e:/Downloads/Nexus-ML/src/sentiment_analysis/pipeline.py) as a subclass of `BasePipeline`:
 
 ```
 Raw Review Text -> TF-IDF Unigram/Bigram Feature Extraction -> Logistic Classifier -> Sentiment Category + Confidence Score + Composite Score (-1 to +1)
