@@ -8,8 +8,8 @@ from api.routes import router as api_router
 from config import BASE_DIR
 
 app = FastAPI(
-    title="Enterprise Multi-Model Production ML Suite",
-    description="Unified API & Interactive Dashboard for 12 End-to-End Production ML Pipelines",
+    title="Nexus-ML Unified Monolith API",
+    description="Legacy unified entry point mounting both ML Dashboard Microservice and Course Microservice routers. For independent microservice deployments, use api.ml_service.main:app (Port 8000) or api.course_service.main:app (Port 8001).",
     version="1.0.0",
     docs_url="/docs",
     redoc_url="/redoc"
