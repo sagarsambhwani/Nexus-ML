@@ -9,7 +9,7 @@ This pipeline utilizes a **Patch-Based Image Feature Extraction Classifier** ope
 
 ## 🏗️ Deep-Dive Implementation Architecture
 
-Implemented in [`pipeline.py`](file:///e:/Downloads/ML_only/src/defect_detection/pipeline.py) as a subclass of `BasePipeline`:
+Implemented in [`pipeline.py`](file:///e:/Downloads/Nexus-ML/src/defect_detection/pipeline.py) as a subclass of `BasePipeline`:
 
 ```
 Surface Image Patch Metrics -> Feature Structuring -> Random Forest Classifier -> Defect Class + Severity Grade + QC Pass/Fail Verdict
