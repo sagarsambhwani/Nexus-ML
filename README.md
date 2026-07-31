@@ -41,8 +41,8 @@
 ### 1. Prerequisites & Environment Setup
 ```bash
 # Clone repository
-git clone https://github.com/your-org/nexus-ml-suite.git
-cd nexus-ml-suite
+git clone https://github.com/sagarsambhwani/Nexus-ML.git
+cd Nexus-ML
 
 # Create virtual environment
 python -m venv venv
@@ -61,27 +61,52 @@ python scripts/train_all.py
 ```
 *Outputs serialized `.joblib` model artifacts to `artifacts/models/` directory.*
 
-### 3. Launch API Server & Visual Web Dashboard
+### 3. Launch Microservices
+
+This project runs as **two independent microservices**.
+
+#### ⚡ ML Dashboard Service (Port 8000)
 ```bash
-uvicorn api.main:app --host 0.0.0.0 --port 8000 --reload
+uvicorn api.ml_service.main:app --host 0.0.0.0 --port 8000 --reload
 ```
-- 🌐 **Interactive Web Dashboard**: Open [http://localhost:8000](http://localhost:8000) in your browser.
-- 📖 **Interactive OpenAPI Docs**: Open [http://localhost:8000/docs](http://localhost:8000/docs).
+- 🌐 **ML Dashboard**: [http://localhost:8000](http://localhost:8000)
+- 📖 **ML API Docs**: [http://localhost:8000/docs](http://localhost:8000/docs)
+
+#### 🎓 Course Academy Service (Port 8001)
+```bash
+uvicorn api.course_service.main:app --host 0.0.0.0 --port 8001 --reload
+```
+- 🌐 **Course Academy UI**: [http://localhost:8001](http://localhost:8001)
+- 📖 **Course API Docs**: [http://localhost:8001/docs](http://localhost:8001/docs)
+
+> **Tip**: For legacy single-host mode, you can still boot both routers from one process:
+> `uvicorn api.main:app --host 0.0.0.0 --port 8000 --reload`
 
 ---
 
 ## 🐳 Docker Deployment
 
-### Run with Docker Compose
+### Run Both Services with Docker Compose (Recommended)
 ```bash
 docker-compose up --build -d
 ```
-Access the application at `http://localhost:8000`.
+This starts **two containers**:
 
-### Standalone Docker Container Build
+| Container | Port | URL |
+|---|---|---|
+| `ml_service` | 8000 | [http://localhost:8000](http://localhost:8000) — ML Dashboard |
+| `course_service` | 8001 | [http://localhost:8001](http://localhost:8001) — Course Academy |
+
+### Standalone Docker Container (ML Service only)
 ```bash
-docker build -t nexus-ml-suite:latest .
-docker run -p 8000:8000 nexus-ml-suite:latest
+docker build -t nexus-ml:latest .
+docker run -p 8000:8000 nexus-ml:latest
+```
+
+### Standalone Docker Container (Course Service)
+```bash
+docker build -t nexus-ml:latest .
+docker run -p 8001:8001 nexus-ml:latest uvicorn api.course_service.main:app --host 0.0.0.0 --port 8001
 ```
 
 ---
@@ -101,7 +126,7 @@ pytest tests/ -v
 .
 ├── config.py                          # Global configuration & artifact paths
 ├── Dockerfile                         # Multi-stage production container build
-├── docker-compose.yml                 # Service orchestration
+├── docker-compose.yml                 # Multi-service orchestration (ml-service + course-service)
 ├── requirements.txt                   # Pinned production dependencies
 ├── README.md                          # Repository documentation
 ├── .github/
@@ -109,31 +134,43 @@ pytest tests/ -v
 │       └── ci-cd.yml                  # CI/CD automated pipeline
 ├── src/                               # 12 ML Pipeline Modules
 │   ├── common/                        # Shared base classes & utilities
-│   ├── 01_fraud_detection/            # Pipeline 1
-│   ├── 02_credit_risk/                # Pipeline 2
-│   ├── 03_customer_churn/             # Pipeline 3
-│   ├── 04_house_prices/               # Pipeline 4
-│   ├── 05_recommendation/             # Pipeline 5
-│   ├── 06_demand_forecasting/         # Pipeline 6
-│   ├── 07_predictive_maintenance/     # Pipeline 7
-│   ├── 08_medical_diagnosis/          # Pipeline 8
-│   ├── 09_sentiment_analysis/         # Pipeline 9
-│   ├── 10_document_classification/    # Pipeline 10
-│   ├── 11_defect_detection/           # Pipeline 11
-│   └── 12_customer_segmentation/      # Pipeline 12
+│   ├── fraud_detection/               # Pipeline 1: Fraud Detection
+│   ├── credit_risk/                   # Pipeline 2: Credit Risk
+│   ├── customer_churn/                # Pipeline 3: Customer Churn
+│   ├── house_prices/                  # Pipeline 4: House Price Valuation
+│   ├── recommendation/                # Pipeline 5: Recommendation System
+│   ├── demand_forecasting/            # Pipeline 6: Demand Forecasting
+│   ├── predictive_maintenance/        # Pipeline 7: Predictive Maintenance
+│   ├── medical_diagnosis/             # Pipeline 8: Medical Diagnosis
+│   ├── sentiment_analysis/            # Pipeline 9: Sentiment Analysis
+│   ├── document_classification/       # Pipeline 10: Document Classification
+│   ├── defect_detection/              # Pipeline 11: CV Defect Detection
+│   └── customer_segmentation/         # Pipeline 12: Customer Segmentation
 ├── api/                               # Production REST API
-│   ├── main.py                        # FastAPI entry point
-│   ├── routes.py                      # REST endpoints for all 12 models
-│   └── schemas.py                     # Pydantic validation schemas
+│   ├── main.py                        # Legacy unified entry point (monolith)
+│   ├── routes.py                      # Unified router (aggregates both microservices)
+│   ├── schemas.py                     # Pydantic validation schemas (all 12 models)
+│   ├── ml_service/
+│   │   ├── main.py                    # ML Dashboard Microservice entry point (Port 8000)
+│   │   └── routes.py                  # ML inference + pipeline status endpoints
+│   └── course_service/
+│       ├── main.py                    # Course Microservice entry point (Port 8001)
+│       └── routes.py                  # Course curriculum & chapter endpoints
 ├── dashboard/                         # Visual Web Application UI
-│   ├── index.html                     # Dashboard Single Page Application
-│   ├── styles.css                     # Glassmorphism design system
-│   └── app.js                         # Dynamic web UI controller
+│   ├── index.html                     # ML Dashboard SPA (served on Port 8000)
+│   ├── course.html                    # Course Academy SPA (served on Port 8001)
+│   ├── styles.css                     # Shared glassmorphism design system
+│   ├── app.js                         # ML Dashboard web UI controller
+│   └── course_app.js                  # Course Academy web UI controller
+├── course/                            # 101 Markdown curriculum chapter files
+│   ├── README.md                      # Course index & volume overview
+│   └── 01_data_cleaning_...md → 101_*.md  # Individual chapter files
 ├── scripts/                           # Automation scripts
 │   └── train_all.py                   # Automated model training script
 └── tests/                             # Pytest test suite
-    ├── test_pipelines.py              # ML pipeline tests
-    └── test_api.py                    # REST API integration tests
+    ├── test_pipelines.py              # ML pipeline unit tests
+    ├── test_api.py                    # Unified REST API integration tests
+    └── test_microservices.py          # Microservice-specific integration tests
 ```
 
 ---
