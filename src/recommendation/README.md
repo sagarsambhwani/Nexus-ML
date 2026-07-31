@@ -11,8 +11,14 @@ This pipeline utilizes **Truncated Singular Value Decomposition (SVD)** matrix f
 
 Implemented in [`pipeline.py`](file:///e:/Downloads/Nexus-ML/src/recommendation/pipeline.py) as a subclass of `BasePipeline`:
 
-```
-User-Item Rating Matrix -> TruncatedSVD Factorization -> Low-Rank Reconstruction -> Category Filtering -> Top-K Recommendation List
+```mermaid
+graph TD
+    A[User-Item Rating Matrix] --> B[TruncatedSVD Factorization]
+    B[TruncatedSVD Factorization] --> C[Low-Rank Reconstruction]
+    C[Low-Rank Reconstruction] --> D[Category Filtering]
+    D[Category Filtering] --> E[Top-K Recommendation List]
+    style A fill:#f9f,stroke:#333,stroke-width:2px
+    style E fill:#bbf,stroke:#333,stroke-width:2px
 ```
 
 ### Class Code Structure & Execution Flow:
@@ -39,6 +45,45 @@ class RecommendationPipeline(BasePipeline):
    - For new users (cold start): Falls back to global item average ratings.
    - Filters candidate items by optional `category` parameter.
    - Normalizes scores into affinity match percentages (0% - 99%) and returns Top-$K$ items.
+
+---
+
+
+## 💻 API Usage Example
+
+**Endpoint:** `POST /api/v1/predict/recommendation`
+
+```bash
+curl -X 'POST' \
+  'http://localhost:8000/api/v1/predict/recommendation' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "user_id": "USER_005",
+  "category": "Electronics",
+  "top_n": 5
+}'
+```
+
+**Expected JSON Response:**
+```json
+{
+  "pipeline": "Recommendation System",
+  "status": "success",
+  "result": {
+    "recommendations": [
+      {
+        "item_id": "ITEM_102",
+        "match_score": 0.95
+      },
+      {
+        "item_id": "ITEM_405",
+        "match_score": 0.88
+      }
+    ]
+  }
+}
+```
 
 ---
 
