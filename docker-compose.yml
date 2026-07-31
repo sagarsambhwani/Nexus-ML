@@ -1,11 +1,12 @@
 version: '3.8'
 
 services:
-  ml-suite-api:
+  ml-service:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: production_ml_suite
+    command: uvicorn api.ml_service.main:app --host 0.0.0.0 --port 8000
+    container_name: ml_service
     ports:
       - "8000:8000"
     environment:
@@ -14,6 +15,24 @@ services:
     restart: always
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  course-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: uvicorn api.course_service.main:app --host 0.0.0.0 --port 8001
+    container_name: course_service
+    ports:
+      - "8001:8001"
+    environment:
+      - PORT=8001
+      - ENVIRONMENT=production
+    restart: always
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8001/health"]
       interval: 30s
       timeout: 10s
       retries: 3

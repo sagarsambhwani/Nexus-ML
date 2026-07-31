@@ -237,9 +237,16 @@ document.addEventListener("DOMContentLoaded", () => {
   const COURSE_CACHE = {};
   let activeCourseKey = "README.md";
 
+  const COURSE_MICROSERVICE_BASE = "http://localhost:8001";
+
   async function fetchCourseList() {
     try {
-      const res = await fetch("/api/v1/courses");
+      let res;
+      try {
+        res = await fetch(`${COURSE_MICROSERVICE_BASE}/api/v1/courses`);
+      } catch (err) {
+        res = await fetch("/api/v1/courses");
+      }
       if (!res.ok) return;
       const data = await res.json();
       ALL_COURSES = data.courses;
@@ -287,7 +294,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   async function fetchCourseContent(courseKey, title) {
     if (courseTitleHeader) courseTitleHeader.textContent = title || "Course Content";
-    if (courseFileBadge) courseFileBadge.textContent = `course/${courseKey}`;
+    if (courseFileBadge) courseFileBadge.textContent = `Course Service (:8001) / course/${courseKey}`;
 
     if (COURSE_CACHE[courseKey]) {
       renderCourseMarkdown(COURSE_CACHE[courseKey]);
@@ -298,13 +305,18 @@ document.addEventListener("DOMContentLoaded", () => {
       courseMarkdownContent.innerHTML = `
         <div class="empty-state">
           <span class="empty-icon">⏳</span>
-          <p>Loading course module...</p>
+          <p>Loading course module from Course Microservice...</p>
         </div>
       `;
     }
 
     try {
-      const res = await fetch(`/api/v1/courses/${courseKey}`);
+      let res;
+      try {
+        res = await fetch(`${COURSE_MICROSERVICE_BASE}/api/v1/courses/${courseKey}`);
+      } catch (err) {
+        res = await fetch(`/api/v1/courses/${courseKey}`);
+      }
       if (!res.ok) {
         if (courseMarkdownContent) courseMarkdownContent.innerHTML = `<p class="error">Failed to load chapter content.</p>`;
         return;
@@ -654,25 +666,44 @@ document.addEventListener("DOMContentLoaded", () => {
     resultWidget.innerHTML = html;
   }
 
-  // Fetch Pipeline Metrics & Metadata
+  // Fetch Pipeline Metrics & Metadata and Check Both Microservices
   async function fetchPipelineStatus() {
     try {
       const res = await fetch("/api/v1/pipelines/status");
-      if (!res.ok) return;
-      const data = await res.json();
-      
-      metricsContainer.innerHTML = "";
-      data.pipelines.forEach(p => {
-        const tag = document.createElement("div");
-        tag.className = "metric-tag";
-        const metricsStr = Object.entries(p.metrics).map(([k, v]) => `${k}: ${v}`).join(" | ");
-        tag.innerHTML = `<strong>${p.name}:</strong> ${metricsStr || 'Trained'}`;
-        metricsContainer.appendChild(tag);
-      });
+      if (res.ok) {
+        const data = await res.json();
+        metricsContainer.innerHTML = "";
+        data.pipelines.forEach(p => {
+          const tag = document.createElement("div");
+          tag.className = "metric-tag";
+          const metricsStr = Object.entries(p.metrics).map(([k, v]) => `${k}: ${v}`).join(" | ");
+          tag.innerHTML = `<strong>${p.name}:</strong> ${metricsStr || 'Trained'}`;
+          metricsContainer.appendChild(tag);
+        });
 
-      document.getElementById("apiStatusText").textContent = "Online (12 Models Ready)";
+        const mlStatusEl = document.getElementById("apiStatusText");
+        if (mlStatusEl) mlStatusEl.textContent = "Online (12 Models Ready)";
+      }
     } catch (e) {
-      document.getElementById("apiStatusText").textContent = "Offline / Server disconnected";
+      const mlStatusEl = document.getElementById("apiStatusText");
+      if (mlStatusEl) mlStatusEl.textContent = "Offline / Disconnected";
+    }
+
+    // Check Course Microservice status
+    try {
+      let courseRes;
+      try {
+        courseRes = await fetch("http://localhost:8001/health");
+      } catch (err) {
+        courseRes = await fetch("/health");
+      }
+      if (courseRes.ok) {
+        const courseStatusEl = document.getElementById("courseStatusText");
+        if (courseStatusEl) courseStatusEl.textContent = "Online (101 Chapters Ready)";
+      }
+    } catch (e) {
+      const courseStatusEl = document.getElementById("courseStatusText");
+      if (courseStatusEl) courseStatusEl.textContent = "Offline / Disconnected";
     }
   }
 
