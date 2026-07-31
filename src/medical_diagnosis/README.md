@@ -11,8 +11,14 @@ This pipeline implements a **Standardized Calibrated Logistic Classifier** that 
 
 Implemented in [`pipeline.py`](file:///e:/Downloads/Nexus-ML/src/medical_diagnosis/pipeline.py) as a subclass of `BasePipeline`:
 
-```
-Patient Clinical Inputs -> Pydantic Schema Check -> StandardScaler Transformation -> Logistic Classifier -> Disease Risk Probability + Biomarker Flags + Clinical Guidance
+```mermaid
+graph TD
+    A[Patient Clinical Inputs] --> B[Pydantic Schema Check]
+    B[Pydantic Schema Check] --> C[StandardScaler Transformation]
+    C[StandardScaler Transformation] --> D[Logistic Classifier]
+    D[Logistic Classifier] --> E[Disease Risk Probability + Biomarker Flags + Clinical Guidance]
+    style A fill:#f9f,stroke:#333,stroke-width:2px
+    style E fill:#bbf,stroke:#333,stroke-width:2px
 ```
 
 ### Class Code Structure & Execution Flow:
@@ -41,6 +47,41 @@ class MedicalDiagnosisPipeline(BasePipeline):
      - $0.30 \le P < 0.60 \rightarrow$ `ELEVATED_RISK` $\rightarrow$ *Lifestyle modifications advised. Repeat screening in 3 months.*
      - $P < 0.30 \rightarrow$ `LOW_RISK` $\rightarrow$ *Biomarkers within normal limits. Routine annual checkup.*
    - Flags abnormal biomarkers (e.g. Glucose > 125 mg/dL, HbA1c > 6.4%, BMI > 30).
+
+---
+
+
+## 💻 API Usage Example
+
+**Endpoint:** `POST /api/v1/predict/medical-diagnosis`
+
+```bash
+curl -X 'POST' \
+  'http://localhost:8000/api/v1/predict/medical-diagnosis' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "age": 54,
+  "glucose": 145.0,
+  "blood_pressure": 95.0,
+  "bmi": 32.4,
+  "hba1c": 6.8,
+  "family_history": 1,
+  "smoker": 0
+}'
+```
+
+**Expected JSON Response:**
+```json
+{
+  "pipeline": "Medical Diagnosis Support",
+  "status": "success",
+  "result": {
+    "disease_risk": 0.82,
+    "guidance": "Elevated HbA1c and Glucose. Consult physician."
+  }
+}
+```
 
 ---
 
