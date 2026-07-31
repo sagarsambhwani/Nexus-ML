@@ -11,8 +11,15 @@ This pipeline implements a **Standardized Logistic Regression Scorecard** model 
 
 Implemented in [`pipeline.py`](file:///e:/Downloads/Nexus-ML/src/credit_risk/pipeline.py) as a subclass of `BasePipeline`:
 
-```
-Borrower Input -> Pydantic Validation -> StandardScaler Transformation -> Logistic Regression -> Probability Scorecard -> Risk Tier & Underwriting Decision
+```mermaid
+graph TD
+    A[Borrower Input] --> B[Pydantic Validation]
+    B[Pydantic Validation] --> C[StandardScaler Transformation]
+    C[StandardScaler Transformation] --> D[Logistic Regression]
+    D[Logistic Regression] --> E[Probability Scorecard]
+    E[Probability Scorecard] --> F[Risk Tier & Underwriting Decision]
+    style A fill:#f9f,stroke:#333,stroke-width:2px
+    style F fill:#bbf,stroke:#333,stroke-width:2px
 ```
 
 ### Class Code Structure & Execution Flow:
@@ -42,6 +49,41 @@ class CreditRiskPipeline(BasePipeline):
      - $10\% \le P < 25\% \rightarrow$ `AA (Near Prime)` $\rightarrow$ `APPROVED`
      - $25\% \le P < 45\% \rightarrow$ `B (Subprime)` $\rightarrow$ `MANUAL_REVIEW`
      - $P \ge 45\% \rightarrow$ `CCC (High Risk)` $\rightarrow$ `REJECTED`
+
+---
+
+
+## 💻 API Usage Example
+
+**Endpoint:** `POST /api/v1/predict/credit-risk`
+
+```bash
+curl -X 'POST' \
+  'http://localhost:8000/api/v1/predict/credit-risk' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "credit_score": 640,
+  "annual_income": 55000,
+  "dti_ratio": 0.42,
+  "loan_amount": 25000,
+  "delinquencies_2yr": 1,
+  "employment_years": 3
+}'
+```
+
+**Expected JSON Response:**
+```json
+{
+  "pipeline": "Credit Risk Prediction",
+  "status": "success",
+  "result": {
+    "default_probability": 0.12,
+    "risk_tier": "AA (Near Prime)",
+    "decision": "APPROVED"
+  }
+}
+```
 
 ---
 
