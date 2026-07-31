@@ -11,8 +11,13 @@ This pipeline combines **StandardScaler Preprocessing**, **K-Means Clustering ($
 
 Implemented in [`pipeline.py`](file:///e:/Downloads/Nexus-ML/src/customer_segmentation/pipeline.py) as a subclass of `BasePipeline`:
 
-```
-Customer RFM Behavioral Vector -> StandardScaler -> K-Means Clustering (K=4) + PCA 2D Mapper -> Assigned Persona & Targeted Marketing Strategy
+```mermaid
+graph TD
+    A[Customer RFM Behavioral Vector] --> B[StandardScaler]
+    B[StandardScaler] --> C[K-Means Clustering (K=4) + PCA 2D Mapper]
+    C[K-Means Clustering (K=4) + PCA 2D Mapper] --> D[Assigned Persona & Targeted Marketing Strategy]
+    style A fill:#f9f,stroke:#333,stroke-width:2px
+    style D fill:#bbf,stroke:#333,stroke-width:2px
 ```
 
 ### Class Code Structure & Execution Flow:
@@ -41,6 +46,39 @@ class CustomerSegmentationPipeline(BasePipeline):
    - Assigns cluster index via `kmeans.predict(X_{\text{scaled}})`.
    - Transforms vector to 2D coordinates ($PC_1, PC_2$) via `pca.transform(X_{\text{scaled}})`.
    - Returns assigned cluster ID, persona name, 2D coordinates, and targeted marketing strategy.
+
+---
+
+
+## 💻 API Usage Example
+
+**Endpoint:** `POST /api/v1/predict/customer-segmentation`
+
+```bash
+curl -X 'POST' \
+  'http://localhost:8000/api/v1/predict/customer-segmentation' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "annual_income_k": 105.0,
+  "spending_score": 88.0,
+  "frequency_purchases": 22.0,
+  "recency_days": 14.0
+}'
+```
+
+**Expected JSON Response:**
+```json
+{
+  "pipeline": "Customer Segmentation",
+  "status": "success",
+  "result": {
+    "cluster_id": 2,
+    "persona": "High-Value Loyal",
+    "strategy": "VIP Rewards Program"
+  }
+}
+```
 
 ---
 
