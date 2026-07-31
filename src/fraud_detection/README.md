@@ -11,8 +11,15 @@ This pipeline implements an ensemble **Random Forest Classifier** trained on tra
 
 The core pipeline is implemented in [`pipeline.py`](file:///e:/Downloads/Nexus-ML/src/fraud_detection/pipeline.py) as a subclass of `BasePipeline`:
 
-```
-Incoming Request -> Pydantic Schema Validation -> Data Normalization -> Random Forest Model -> Risk Calibration -> Output Payload
+```mermaid
+graph TD
+    A[Incoming Request] --> B[Pydantic Schema Validation]
+    B[Pydantic Schema Validation] --> C[Data Normalization]
+    C[Data Normalization] --> D[Random Forest Model]
+    D[Random Forest Model] --> E[Risk Calibration]
+    E[Risk Calibration] --> F[Output Payload]
+    style A fill:#f9f,stroke:#333,stroke-width:2px
+    style F fill:#bbf,stroke:#333,stroke-width:2px
 ```
 
 ### Class Code Structure & Execution Flow:
@@ -43,6 +50,48 @@ class FraudDetectionPipeline(BasePipeline):
      - $0.25 \le P < 0.50 \rightarrow$ `MEDIUM_RISK` (Yellow alert, trigger 2FA)
      - $P < 0.25 \rightarrow$ `LOW_RISK` (Green, pass transaction)
    - Computes top 3 feature importances using Gini impurity decrease.
+
+---
+
+
+## 💻 API Usage Example
+
+**Endpoint:** `POST /api/v1/predict/fraud-detection`
+
+```bash
+curl -X 'POST' \
+  'http://localhost:8000/api/v1/predict/fraud-detection' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "amount": 250.5,
+  "time_hour": 2,
+  "velocity_1h": 4,
+  "location_risk": 0.85,
+  "v1": 1.8,
+  "v2": -0.5,
+  "v3": 0.2,
+  "v4": 1.1,
+  "v5": -0.8
+}'
+```
+
+**Expected JSON Response:**
+```json
+{
+  "pipeline": "Fraud Detection",
+  "status": "success",
+  "result": {
+    "fraud_probability": 0.92,
+    "risk_tier": "HIGH_RISK",
+    "top_factors": {
+      "location_risk": 0.45,
+      "velocity_1h": 0.32,
+      "amount": 0.15
+    }
+  }
+}
+```
 
 ---
 
