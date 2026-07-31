@@ -11,8 +11,13 @@ This pipeline employs a **Gradient Boosting Regressor** to predict property fair
 
 Implemented in [`pipeline.py`](file:///e:/Downloads/Nexus-ML/src/house_prices/pipeline.py) as a subclass of `BasePipeline`:
 
-```
-Property Attributes -> Feature Alignment -> Gradient Boosting Regressor -> Fair Market Value ($) + SqFt Metric + 95% Valuation Interval
+```mermaid
+graph TD
+    A[Property Attributes] --> B[Feature Alignment]
+    B[Feature Alignment] --> C[Gradient Boosting Regressor]
+    C[Gradient Boosting Regressor] --> D[Fair Market Value ($) + SqFt Metric + 95% Valuation Interval]
+    style A fill:#f9f,stroke:#333,stroke-width:2px
+    style D fill:#bbf,stroke:#333,stroke-width:2px
 ```
 
 ### Class Code Structure & Execution Flow:
@@ -37,6 +42,42 @@ class HousePricePipeline(BasePipeline):
    - Computes point price prediction $\hat{y}$.
    - Calculates Price per Square Foot: $\text{P/SqFt} = \frac{\hat{y}}{\text{sqft}}$.
    - Computes statistical valuation confidence interval bounds: $[\hat{y} \times 0.93, \hat{y} \times 1.07]$.
+
+---
+
+
+## 💻 API Usage Example
+
+**Endpoint:** `POST /api/v1/predict/house-prices`
+
+```bash
+curl -X 'POST' \
+  'http://localhost:8000/api/v1/predict/house-prices' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "sqft": 2200,
+  "bedrooms": 3,
+  "bathrooms": 2.5,
+  "location_score": 8.5,
+  "house_age": 10,
+  "garage_cars": 2,
+  "dist_city_km": 6.2
+}'
+```
+
+**Expected JSON Response:**
+```json
+{
+  "pipeline": "House Price Prediction",
+  "status": "success",
+  "result": {
+    "predicted_price": 425000,
+    "price_lower_bound": 410000,
+    "price_upper_bound": 440000
+  }
+}
+```
 
 ---
 
