@@ -9,7 +9,7 @@ This pipeline utilizes **Truncated Singular Value Decomposition (SVD)** matrix f
 
 ## 🏗️ Deep-Dive Implementation Architecture
 
-Implemented in [`pipeline.py`](file:///e:/Downloads/ML_only/src/recommendation/pipeline.py) as a subclass of `BasePipeline`:
+Implemented in [`pipeline.py`](file:///e:/Downloads/Nexus-ML/src/recommendation/pipeline.py) as a subclass of `BasePipeline`:
 
 ```
 User-Item Rating Matrix -> TruncatedSVD Factorization -> Low-Rank Reconstruction -> Category Filtering -> Top-K Recommendation List
