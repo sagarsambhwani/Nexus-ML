@@ -11,8 +11,13 @@ This pipeline implements an autoregressive **Lag-Feature Gradient Boosting Model
 
 Implemented in [`pipeline.py`](file:///e:/Downloads/Nexus-ML/src/demand_forecasting/pipeline.py) as a subclass of `BasePipeline`:
 
-```
-Time-Series Sales Stream -> Autoregressive Feature Extraction (Lags & Moving Averages) -> Gradient Boosting Regressor -> Recursive Multi-Step Forecast Horizon
+```mermaid
+graph TD
+    A[Time-Series Sales Stream] --> B[Autoregressive Feature Extraction (Lags & Moving Averages)]
+    B[Autoregressive Feature Extraction (Lags & Moving Averages)] --> C[Gradient Boosting Regressor]
+    C[Gradient Boosting Regressor] --> D[Recursive Multi-Step Forecast Horizon]
+    style A fill:#f9f,stroke:#333,stroke-width:2px
+    style D fill:#bbf,stroke:#333,stroke-width:2px
 ```
 
 ### Class Code Structure & Execution Flow:
@@ -41,6 +46,44 @@ class DemandForecastingPipeline(BasePipeline):
      - Predicts sales $\hat{y}_t$ for current day.
      - Updates autoregressive lag buffers dynamically ($\text{lag}_1 \leftarrow \hat{y}_t$, updates rolling mean).
    - Computes total predicted period demand and confidence bounds ($\pm 12\%$).
+
+---
+
+
+## 💻 API Usage Example
+
+**Endpoint:** `POST /api/v1/predict/demand-forecasting`
+
+```bash
+curl -X 'POST' \
+  'http://localhost:8000/api/v1/predict/demand-forecasting' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "store_id": "STORE_101",
+  "horizon_days": 7,
+  "is_promo": 1
+}'
+```
+
+**Expected JSON Response:**
+```json
+{
+  "pipeline": "Demand Forecasting",
+  "status": "success",
+  "result": {
+    "forecasts": [
+      120,
+      135,
+      142,
+      110,
+      95,
+      205,
+      210
+    ]
+  }
+}
+```
 
 ---
 
