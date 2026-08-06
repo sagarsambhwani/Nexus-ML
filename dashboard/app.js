@@ -237,16 +237,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const COURSE_CACHE = {};
   let activeCourseKey = "README.md";
 
-  const COURSE_MICROSERVICE_BASE = "http://localhost:8001";
+  const COURSE_MICROSERVICE_BASE = window.location.origin;
 
   async function fetchCourseList() {
     try {
-      let res;
-      try {
-        res = await fetch(`${COURSE_MICROSERVICE_BASE}/api/v1/courses`);
-      } catch (err) {
-        res = await fetch("/api/v1/courses");
-      }
+      const res = await fetch("/api/v1/courses");
       if (!res.ok) return;
       const data = await res.json();
       ALL_COURSES = data.courses;
@@ -294,7 +289,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   async function fetchCourseContent(courseKey, title) {
     if (courseTitleHeader) courseTitleHeader.textContent = title || "Course Content";
-    if (courseFileBadge) courseFileBadge.textContent = `Course Service (:8001) / course/${courseKey}`;
+    if (courseFileBadge) courseFileBadge.textContent = `Course Service / course/${courseKey}`;
 
     if (COURSE_CACHE[courseKey]) {
       renderCourseMarkdown(COURSE_CACHE[courseKey]);
@@ -689,14 +684,9 @@ document.addEventListener("DOMContentLoaded", () => {
       if (mlStatusEl) mlStatusEl.textContent = "Offline / Disconnected";
     }
 
-    // Check Course Microservice status
+    // Check Unified API status
     try {
-      let courseRes;
-      try {
-        courseRes = await fetch("http://localhost:8001/health");
-      } catch (err) {
-        courseRes = await fetch("/health");
-      }
+      const courseRes = await fetch("/health");
       if (courseRes.ok) {
         const courseStatusEl = document.getElementById("courseStatusText");
         if (courseStatusEl) courseStatusEl.textContent = "Online (101 Chapters Ready)";
