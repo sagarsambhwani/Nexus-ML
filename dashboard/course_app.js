@@ -7,20 +7,24 @@ document.addEventListener("DOMContentLoaded", () => {
   const courseMarkdownContent = document.getElementById("courseMarkdownContent");
   const btnPrevChapter = document.getElementById("btnPrevChapter");
   const btnNextChapter = document.getElementById("btnNextChapter");
+  const btnVersionV1 = document.getElementById("btnVersionV1");
+  const btnVersionV2 = document.getElementById("btnVersionV2");
 
   let ALL_COURSES = [];
   const COURSE_CACHE = {};
   let activeIndex = 0;
+  let currentVersion = "v1";
 
-  // Configurable base URL — defaults to the host serving this page (port 8001)
   const COURSE_BASE_URL = window.location.origin;
 
-  async function fetchCourseList() {
+  async function fetchCourseList(version = "v1") {
+    currentVersion = version;
     try {
-      const res = await fetch(`${COURSE_BASE_URL}/api/v1/courses`);
+      const res = await fetch(`${COURSE_BASE_URL}/api/v1/courses?version=${version}`);
       if (!res.ok) return;
       const data = await res.json();
       ALL_COURSES = data.courses;
+      activeIndex = 0;
       renderCourseList(ALL_COURSES);
       
       if (ALL_COURSES.length > 0) {
@@ -33,11 +37,34 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  if (btnVersionV1) {
+    btnVersionV1.addEventListener("click", () => {
+      btnVersionV1.style.background = "rgba(216, 180, 254, 0.2)";
+      btnVersionV1.style.color = "#ffffff";
+      if (btnVersionV2) {
+        btnVersionV2.style.background = "transparent";
+        btnVersionV2.style.color = "var(--text-muted)";
+      }
+      fetchCourseList("v1");
+    });
+  }
+
+  if (btnVersionV2) {
+    btnVersionV2.addEventListener("click", () => {
+      btnVersionV2.style.background = "rgba(216, 180, 254, 0.2)";
+      btnVersionV2.style.color = "#ffffff";
+      if (btnVersionV1) {
+        btnVersionV1.style.background = "transparent";
+        btnVersionV1.style.color = "var(--text-muted)";
+      }
+      fetchCourseList("v2");
+    });
+  }
+
   function renderCourseList(courses) {
     if (!courseListContainer) return;
     courseListContainer.innerHTML = "";
 
-    // Fix: compare by key, not by filtered array index, so highlight survives search filtering
     const activeKey = ALL_COURSES[activeIndex]?.key;
     courses.forEach((c) => {
       const isActive = c.key === activeKey;
@@ -53,7 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
       item.style.cursor = "pointer";
       item.style.background = isActive ? "rgba(216, 180, 254, 0.2)" : "transparent";
       item.style.color = isActive ? "#ffffff" : "var(--text-muted)";
-      item.innerHTML = `<span class="icon">📖</span> ${c.title}`;
+      item.innerHTML = `<span class="icon">${currentVersion === 'v2' ? '🚀' : '📖'}</span> ${c.title}`;
       item.title = c.title;
 
       item.addEventListener("click", () => {
@@ -83,10 +110,12 @@ document.addEventListener("DOMContentLoaded", () => {
   async function fetchCourseContent(courseKey, title) {
     if (courseTitleHeader) courseTitleHeader.textContent = title || "Course Content";
     if (currentChapterName) currentChapterName.textContent = title || "Chapter Content";
-    if (courseFileBadge) courseFileBadge.textContent = `Course Microservice (:8001) / course/${courseKey}`;
+    const folderName = currentVersion === "v2" ? "course_v2" : "course";
+    if (courseFileBadge) courseFileBadge.textContent = `Course Microservice (:8001) / ${folderName}/${courseKey}`;
 
-    if (COURSE_CACHE[courseKey]) {
-      renderMarkdown(COURSE_CACHE[courseKey]);
+    const cacheKey = `${currentVersion}:${courseKey}`;
+    if (COURSE_CACHE[cacheKey]) {
+      renderMarkdown(COURSE_CACHE[cacheKey]);
       return;
     }
 
@@ -100,13 +129,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     try {
-      const res = await fetch(`${COURSE_BASE_URL}/api/v1/courses/${courseKey}`);
+      const res = await fetch(`${COURSE_BASE_URL}/api/v1/courses/${courseKey}?version=${currentVersion}`);
       if (!res.ok) {
         if (courseMarkdownContent) courseMarkdownContent.innerHTML = `<p class="error">Failed to load chapter content.</p>`;
         return;
       }
       const data = await res.json();
-      COURSE_CACHE[courseKey] = data.content;
+      COURSE_CACHE[cacheKey] = data.content;
       renderMarkdown(data.content);
     } catch (e) {
       if (courseMarkdownContent) courseMarkdownContent.innerHTML = `<p class="error">Error loading course: ${e.message}</p>`;
@@ -141,6 +170,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Initialize
-  fetchCourseList();
+  // Initialize with V1
+  fetchCourseList("v1");
 });
