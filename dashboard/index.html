@@ -64,14 +64,10 @@
 
       <div class="sidebar-footer">
         <div class="server-status" style="margin-bottom: 6px;">
-          <span class="status-dot green" id="mlStatusDot"></span> ML Service (:8000): <strong id="apiStatusText">Connected</strong>
-        </div>
-        <div class="server-status">
-          <span class="status-dot green" id="courseStatusDot"></span> Course Service (:8001): <strong id="courseStatusText">Connected</strong>
+          <span class="status-dot green" id="mlStatusDot"></span> Unified API: <strong id="apiStatusText">Connected</strong>
         </div>
         <div style="margin-top: 10px; display: flex; flex-direction: column; gap: 4px;">
-          <a href="http://localhost:8000/docs" target="_blank" class="docs-link">📖 ML API Docs (:8000/docs)</a>
-          <a href="http://localhost:8001/docs" target="_blank" class="docs-link">📖 Course API Docs (:8001/docs)</a>
+          <a href="/docs" target="_blank" class="docs-link">📖 API OpenAPI Docs (/docs)</a>
         </div>
       </div>
     </aside>
@@ -84,8 +80,8 @@
           <h2 id="currentPipelineTitle">Fraud Detection</h2>
           <p id="currentPipelineSubtitle">Real-time credit card transaction anomaly scoring & classification</p>
           <div class="service-badges-group" style="display: flex; gap: 8px; margin-top: 8px;">
-            <span class="pill blue" id="mlBadge">⚡ ML Service (:8000)</span>
-            <span class="pill purple" id="courseBadge">🎓 Course Service (:8001)</span>
+            <span class="pill blue" id="mlBadge">⚡ ML Service</span>
+            <span class="pill purple" id="courseBadge">🎓 Course Service</span>
           </div>
         </div>
         <div class="header-right-group">
@@ -95,7 +91,7 @@
             <button class="tab-btn" id="tabCourse">🎓 100-Chapter Course</button>
           </div>
           <div class="header-actions" id="headerActions">
-            <a href="http://localhost:8001" target="_blank" class="btn btn-secondary" style="text-decoration:none; background: rgba(216, 180, 254, 0.15); color: #d8b4fe; border: 1px solid rgba(216, 180, 254, 0.3); display: inline-flex; align-items: center; gap: 6px;">🎓 Course Page (:8001)</a>
+            <a href="/static/course.html" target="_blank" class="btn btn-secondary" style="text-decoration:none; background: rgba(216, 180, 254, 0.15); color: #d8b4fe; border: 1px solid rgba(216, 180, 254, 0.3); display: inline-flex; align-items: center; gap: 6px;">🎓 Course Page</a>
             <button class="btn btn-secondary" id="btnLoadPreset">⚡ Load High Risk Preset</button>
             <button class="btn btn-secondary" id="btnLoadNormalPreset">🟢 Load Normal Preset</button>
             <button class="btn btn-primary" id="btnRunInference">🚀 Run Model Inference</button>
