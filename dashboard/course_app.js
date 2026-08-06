@@ -111,7 +111,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (courseTitleHeader) courseTitleHeader.textContent = title || "Course Content";
     if (currentChapterName) currentChapterName.textContent = title || "Chapter Content";
     const folderName = currentVersion === "v2" ? "course_v2" : "course";
-    if (courseFileBadge) courseFileBadge.textContent = `Course Microservice (:8001) / ${folderName}/${courseKey}`;
+    if (courseFileBadge) courseFileBadge.textContent = `Nexus Academy / ${folderName}/${courseKey}`;
 
     const cacheKey = `${currentVersion}:${courseKey}`;
     if (COURSE_CACHE[cacheKey]) {
