@@ -66,26 +66,24 @@ python scripts/train_all.py
 ```
 *Outputs serialized `.joblib` model artifacts to `artifacts/models/` directory.*
 
-### 3. Launch Microservices
+### 3. Launch Unified Server (Automatic Free Port Selection)
 
-This project runs as **two independent microservices**.
-
-#### ⚡ ML Dashboard Service (Port 8000)
+Run the unified application with a single command:
 ```bash
-uvicorn api.ml_service.main:app --host 0.0.0.0 --port 8000 --reload
+python run.py
 ```
-- 🌐 **ML Dashboard**: [http://localhost:8000](http://localhost:8000)
-- 📖 **ML API Docs**: [http://localhost:8000/docs](http://localhost:8000/docs)
 
-#### 🎓 Course Academy Service (Port 8001)
+Features of `python run.py`:
+- 🔍 **Dynamic Port Finder**: Automatically finds an available free port (starts at 8000; if busy, automatically binds to the next available port).
+- 🚀 **Unified Monolith**: Hosts ML Pipelines, Course Academy (V1 & V2), and Dashboard UI together on ONE port.
+- 🌐 **Interactive Dashboard**: `http://127.0.0.1:<PORT>/static/index.html`
+- 🎓 **Course Academy UI**: `http://127.0.0.1:<PORT>/static/course.html`
+- 📖 **OpenAPI Docs**: `http://127.0.0.1:<PORT>/docs`
+
+*(Optional)* You can also pass custom host/port arguments if desired:
 ```bash
-uvicorn api.course_service.main:app --host 0.0.0.0 --port 8001 --reload
+python run.py --port 8080 --reload
 ```
-- 🌐 **Course Academy UI**: [http://localhost:8001](http://localhost:8001)
-- 📖 **Course API Docs**: [http://localhost:8001/docs](http://localhost:8001/docs)
-
-> **Tip**: For legacy single-host mode, you can still boot both routers from one process:
-> `uvicorn api.main:app --host 0.0.0.0 --port 8000 --reload`
 
 ---
 

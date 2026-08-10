@@ -32,15 +32,15 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     } catch (e) {
       if (courseListContainer) {
-        courseListContainer.innerHTML = `<p class="error" style="color:#fca5a5; padding:12px;">Failed to load course list: ${e.message}</p>`;
+        courseListContainer.innerHTML = `<p class="error" style="color:var(--accent-rose); padding:12px;">Failed to load course list: ${e.message}</p>`;
       }
     }
   }
 
   if (btnVersionV1) {
     btnVersionV1.addEventListener("click", () => {
-      btnVersionV1.style.background = "rgba(216, 180, 254, 0.2)";
-      btnVersionV1.style.color = "#ffffff";
+      btnVersionV1.style.background = "#eef2ff";
+      btnVersionV1.style.color = "var(--accent-primary)";
       if (btnVersionV2) {
         btnVersionV2.style.background = "transparent";
         btnVersionV2.style.color = "var(--text-muted)";
@@ -51,8 +51,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (btnVersionV2) {
     btnVersionV2.addEventListener("click", () => {
-      btnVersionV2.style.background = "rgba(216, 180, 254, 0.2)";
-      btnVersionV2.style.color = "#ffffff";
+      btnVersionV2.style.background = "#eef2ff";
+      btnVersionV2.style.color = "var(--accent-primary)";
       if (btnVersionV1) {
         btnVersionV1.style.background = "transparent";
         btnVersionV1.style.color = "var(--text-muted)";
@@ -76,10 +76,10 @@ document.addEventListener("DOMContentLoaded", () => {
       item.style.padding = "8px 12px";
       item.style.fontSize = "13px";
       item.style.borderRadius = "8px";
-      item.style.border = "1px solid transparent";
+      item.style.border = isActive ? "1px solid #c7d2fe" : "1px solid transparent";
       item.style.cursor = "pointer";
-      item.style.background = isActive ? "rgba(216, 180, 254, 0.2)" : "transparent";
-      item.style.color = isActive ? "#ffffff" : "var(--text-muted)";
+      item.style.background = isActive ? "#eef2ff" : "transparent";
+      item.style.color = isActive ? "#4338ca" : "var(--text-muted)";
       item.innerHTML = `<span class="icon">${currentVersion === 'v2' ? '🚀' : '📖'}</span> ${c.title}`;
       item.title = c.title;
 
