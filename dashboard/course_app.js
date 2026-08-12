@@ -4,11 +4,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const courseTitleHeader = document.getElementById("courseTitleHeader");
   const currentChapterName = document.getElementById("currentChapterName");
   const courseFileBadge = document.getElementById("courseFileBadge");
+  const chapterCountBadge = document.getElementById("chapterCountBadge");
   const courseMarkdownContent = document.getElementById("courseMarkdownContent");
   const btnPrevChapter = document.getElementById("btnPrevChapter");
   const btnNextChapter = document.getElementById("btnNextChapter");
   const btnVersionV1 = document.getElementById("btnVersionV1");
   const btnVersionV2 = document.getElementById("btnVersionV2");
+  const btnVersionVision = document.getElementById("btnVersionVision");
 
   let ALL_COURSES = [];
   const COURSE_CACHE = {};
@@ -25,6 +27,9 @@ document.addEventListener("DOMContentLoaded", () => {
       const data = await res.json();
       ALL_COURSES = data.courses;
       activeIndex = 0;
+      if (chapterCountBadge) {
+        chapterCountBadge.textContent = `${data.total_courses} Total Modules`;
+      }
       renderCourseList(ALL_COURSES);
       
       if (ALL_COURSES.length > 0) {
@@ -32,32 +37,43 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     } catch (e) {
       if (courseListContainer) {
-        courseListContainer.innerHTML = `<p class="error" style="color:var(--accent-rose); padding:12px;">Failed to load course list: ${e.message}</p>`;
+        courseListContainer.innerHTML = `<p class="error" style="color:var(--accent-rose); padding:12px;">Failed to load curriculum: ${e.message}</p>`;
       }
     }
   }
 
+  function updateActiveTab(activeBtn) {
+    [btnVersionV1, btnVersionV2, btnVersionVision].forEach(btn => {
+      if (btn) {
+        if (btn === activeBtn) {
+          btn.style.background = "#eef2ff";
+          btn.style.color = "var(--accent-primary)";
+        } else {
+          btn.style.background = "transparent";
+          btn.style.color = "var(--text-muted)";
+        }
+      }
+    });
+  }
+
   if (btnVersionV1) {
     btnVersionV1.addEventListener("click", () => {
-      btnVersionV1.style.background = "#eef2ff";
-      btnVersionV1.style.color = "var(--accent-primary)";
-      if (btnVersionV2) {
-        btnVersionV2.style.background = "transparent";
-        btnVersionV2.style.color = "var(--text-muted)";
-      }
+      updateActiveTab(btnVersionV1);
       fetchCourseList("v1");
     });
   }
 
   if (btnVersionV2) {
     btnVersionV2.addEventListener("click", () => {
-      btnVersionV2.style.background = "#eef2ff";
-      btnVersionV2.style.color = "var(--accent-primary)";
-      if (btnVersionV1) {
-        btnVersionV1.style.background = "transparent";
-        btnVersionV1.style.color = "var(--text-muted)";
-      }
+      updateActiveTab(btnVersionV2);
       fetchCourseList("v2");
+    });
+  }
+
+  if (btnVersionVision) {
+    btnVersionVision.addEventListener("click", () => {
+      updateActiveTab(btnVersionVision);
+      fetchCourseList("vision");
     });
   }
 
@@ -80,7 +96,12 @@ document.addEventListener("DOMContentLoaded", () => {
       item.style.cursor = "pointer";
       item.style.background = isActive ? "#eef2ff" : "transparent";
       item.style.color = isActive ? "#4338ca" : "var(--text-muted)";
-      item.innerHTML = `<span class="icon">${currentVersion === 'v2' ? '🚀' : '📖'}</span> ${c.title}`;
+      
+      let icon = '📖';
+      if (currentVersion === 'vision') icon = '👁️';
+      else if (currentVersion === 'v2') icon = '🚀';
+
+      item.innerHTML = `<span class="icon">${icon}</span> ${c.title}`;
       item.title = c.title;
 
       item.addEventListener("click", () => {
@@ -99,77 +120,66 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  function loadChapterByIndex(index) {
+  async function loadChapterByIndex(index) {
     if (index < 0 || index >= ALL_COURSES.length) return;
     activeIndex = index;
-    const course = ALL_COURSES[index];
+    const chapter = ALL_COURSES[index];
+
     renderCourseList(ALL_COURSES);
-    fetchCourseContent(course.key, course.title);
-  }
 
-  async function fetchCourseContent(courseKey, title) {
-    if (courseTitleHeader) courseTitleHeader.textContent = title || "Course Content";
-    if (currentChapterName) currentChapterName.textContent = title || "Chapter Content";
-    const folderName = currentVersion === "v2" ? "course_v2" : "course";
-    if (courseFileBadge) courseFileBadge.textContent = `Nexus Academy / ${folderName}/${courseKey}`;
+    if (currentChapterName) currentChapterName.textContent = chapter.title;
+    if (courseTitleHeader) courseTitleHeader.textContent = chapter.title;
+    if (courseFileBadge) courseFileBadge.textContent = `${chapter.part} / ${chapter.filename}`;
 
-    const cacheKey = `${currentVersion}:${courseKey}`;
+    const cacheKey = `${currentVersion}_${chapter.key}`;
     if (COURSE_CACHE[cacheKey]) {
       renderMarkdown(COURSE_CACHE[cacheKey]);
       return;
     }
 
     if (courseMarkdownContent) {
-      courseMarkdownContent.innerHTML = `
-        <div class="empty-state">
-          <span class="empty-icon">⏳</span>
-          <p>Loading course module content from Course Microservice...</p>
-        </div>
-      `;
+      courseMarkdownContent.innerHTML = `<div class="loading-spinner">Loading chapter contents...</div>`;
     }
 
     try {
-      const res = await fetch(`${COURSE_BASE_URL}/api/v1/courses/${courseKey}?version=${currentVersion}`);
-      if (!res.ok) {
-        if (courseMarkdownContent) courseMarkdownContent.innerHTML = `<p class="error">Failed to load chapter content.</p>`;
-        return;
-      }
+      const res = await fetch(`${COURSE_BASE_URL}/api/v1/courses/${chapter.key}?version=${currentVersion}`);
+      if (!res.ok) throw new Error("Failed to load chapter content.");
       const data = await res.json();
       COURSE_CACHE[cacheKey] = data.content;
       renderMarkdown(data.content);
     } catch (e) {
-      if (courseMarkdownContent) courseMarkdownContent.innerHTML = `<p class="error">Error loading course: ${e.message}</p>`;
+      if (courseMarkdownContent) {
+        courseMarkdownContent.innerHTML = `<p class="error" style="color:var(--accent-rose); padding:16px;">Error loading content: ${e.message}</p>`;
+      }
     }
   }
 
-  function renderMarkdown(markdownText) {
+  function renderMarkdown(md) {
     if (!courseMarkdownContent) return;
-    try {
-      if (typeof window.marked === 'function') {
-        courseMarkdownContent.innerHTML = window.marked(markdownText);
-        return;
-      } else if (window.marked && typeof window.marked.parse === 'function') {
-        courseMarkdownContent.innerHTML = window.marked.parse(markdownText);
-        return;
-      }
-    } catch (e) {
-      console.warn("Marked parser fallback:", e);
+    if (window.marked) {
+      courseMarkdownContent.innerHTML = marked.parse(md);
+    } else {
+      courseMarkdownContent.textContent = md;
     }
-    courseMarkdownContent.innerText = markdownText;
+    courseMarkdownContent.scrollTop = 0;
   }
 
   if (btnPrevChapter) {
     btnPrevChapter.addEventListener("click", () => {
-      if (activeIndex > 0) loadChapterByIndex(activeIndex - 1);
+      if (activeIndex > 0) {
+        loadChapterByIndex(activeIndex - 1);
+      }
     });
   }
 
   if (btnNextChapter) {
     btnNextChapter.addEventListener("click", () => {
-      if (activeIndex < ALL_COURSES.length - 1) loadChapterByIndex(activeIndex + 1);
+      if (activeIndex < ALL_COURSES.length - 1) {
+        loadChapterByIndex(activeIndex + 1);
+      }
     });
   }
 
-  // Initialize with V1
+  // Initial load
   fetchCourseList("v1");
 });
