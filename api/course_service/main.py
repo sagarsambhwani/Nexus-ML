@@ -6,8 +6,11 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
-if str(BASE_DIR) not in sys.path:
-    sys.path.insert(0, str(BASE_DIR))
+NEXUS_ML_DIR = BASE_DIR / "nexus_ml"
+
+for p in [BASE_DIR, NEXUS_ML_DIR]:
+    if str(p) not in sys.path:
+        sys.path.insert(0, str(p))
 
 from api.course_service.routes import router as course_router
 
@@ -49,7 +52,9 @@ def read_root():
 
 @app.get("/health")
 def health_check():
-    course_dir = BASE_DIR / "course"
+    course_dir = BASE_DIR / "nexus_ml" / "course"
+    if not course_dir.exists():
+        course_dir = BASE_DIR / "course"
     total_chapters = len(list(course_dir.glob("*.md"))) if course_dir.exists() else 0
     return {
         "status": "healthy",

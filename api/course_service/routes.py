@@ -3,15 +3,20 @@ from pathlib import Path
 import sys
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
-if str(BASE_DIR) not in sys.path:
-    sys.path.insert(0, str(BASE_DIR))
+NEXUS_ML_DIR = BASE_DIR / "nexus_ml"
+
+for p in [BASE_DIR, NEXUS_ML_DIR]:
+    if str(p) not in sys.path:
+        sys.path.insert(0, str(p))
 
 router = APIRouter(prefix="/api/v1", tags=["Course Curriculum Endpoints"])
 
 @router.get("/courses")
 def list_courses(version: str = "v1"):
     target_dir_name = "course_v2" if version.lower() in ["v2", "2"] else "course"
-    course_dir = BASE_DIR / target_dir_name
+    course_dir = BASE_DIR / "nexus_ml" / target_dir_name
+    if not course_dir.exists():
+        course_dir = BASE_DIR / target_dir_name
     if not course_dir.exists():
         raise HTTPException(status_code=404, detail=f"Course directory '{target_dir_name}' not found.")
     
@@ -71,7 +76,9 @@ def get_course_content(course_key: str, version: str = "v1"):
         course_key += ".md"
         
     target_dir_name = "course_v2" if version.lower() in ["v2", "2"] else "course"
-    course_path = BASE_DIR / target_dir_name / course_key
+    course_path = BASE_DIR / "nexus_ml" / target_dir_name / course_key
+    if not course_path.exists():
+        course_path = BASE_DIR / target_dir_name / course_key
     
     if not course_path.exists():
         raise HTTPException(status_code=404, detail=f"Course chapter '{course_key}' not found in {target_dir_name}.")
@@ -80,4 +87,3 @@ def get_course_content(course_key: str, version: str = "v1"):
         content = f.read()
         
     return {"version": version, "key": course_key, "content": content}
-

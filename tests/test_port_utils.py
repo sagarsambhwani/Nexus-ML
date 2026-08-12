@@ -1,6 +1,16 @@
 import socket
 import pytest
-from src.common.port_utils import find_free_port
+import sys
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+NEXUS_ML_DIR = BASE_DIR / "nexus_ml"
+
+for p in [BASE_DIR, NEXUS_ML_DIR]:
+    if str(p) not in sys.path:
+        sys.path.insert(0, str(p))
+
+from nexus_ml.src.common.port_utils import find_free_port
 
 def test_find_free_port_returns_int():
     port = find_free_port(8500)

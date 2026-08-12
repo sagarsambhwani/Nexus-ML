@@ -3,20 +3,24 @@ import pytest
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-sys.path.insert(0, str(BASE_DIR))
+NEXUS_ML_DIR = BASE_DIR / "nexus_ml"
 
-from src.fraud_detection.pipeline import FraudDetectionPipeline
-from src.credit_risk.pipeline import CreditRiskPipeline
-from src.customer_churn.pipeline import CustomerChurnPipeline
-from src.house_prices.pipeline import HousePricePipeline
-from src.recommendation.pipeline import RecommendationPipeline
-from src.demand_forecasting.pipeline import DemandForecastingPipeline
-from src.predictive_maintenance.pipeline import PredictiveMaintenancePipeline
-from src.medical_diagnosis.pipeline import MedicalDiagnosisPipeline
-from src.sentiment_analysis.pipeline import SentimentAnalysisPipeline
-from src.document_classification.pipeline import DocumentClassificationPipeline
-from src.defect_detection.pipeline import DefectDetectionPipeline
-from src.customer_segmentation.pipeline import CustomerSegmentationPipeline
+for p in [BASE_DIR, NEXUS_ML_DIR]:
+    if str(p) not in sys.path:
+        sys.path.insert(0, str(p))
+
+from nexus_ml.src.fraud_detection.pipeline import FraudDetectionPipeline
+from nexus_ml.src.credit_risk.pipeline import CreditRiskPipeline
+from nexus_ml.src.customer_churn.pipeline import CustomerChurnPipeline
+from nexus_ml.src.house_prices.pipeline import HousePricePipeline
+from nexus_ml.src.recommendation.pipeline import RecommendationPipeline
+from nexus_ml.src.demand_forecasting.pipeline import DemandForecastingPipeline
+from nexus_ml.src.predictive_maintenance.pipeline import PredictiveMaintenancePipeline
+from nexus_ml.src.medical_diagnosis.pipeline import MedicalDiagnosisPipeline
+from nexus_ml.src.sentiment_analysis.pipeline import SentimentAnalysisPipeline
+from nexus_ml.src.document_classification.pipeline import DocumentClassificationPipeline
+from nexus_ml.src.defect_detection.pipeline import DefectDetectionPipeline
+from nexus_ml.src.customer_segmentation.pipeline import CustomerSegmentationPipeline
 
 def test_fraud_detection():
     pipe = FraudDetectionPipeline()

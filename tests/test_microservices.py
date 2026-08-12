@@ -4,8 +4,14 @@ from pathlib import Path
 from fastapi.testclient import TestClient
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-if str(BASE_DIR) not in sys.path:
-    sys.path.insert(0, str(BASE_DIR))
+NEXUS_ML_DIR = BASE_DIR / "nexus_ml"
+
+for p in [BASE_DIR, NEXUS_ML_DIR]:
+    if str(p) not in sys.path:
+        sys.path.insert(0, str(p))
+
+from nexus_ml.scripts.train_all import train_all
+train_all()
 
 # Import microservices
 from api.course_service.main import app as course_app

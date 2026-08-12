@@ -7,11 +7,14 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-if str(BASE_DIR) not in sys.path:
-    sys.path.insert(0, str(BASE_DIR))
+NEXUS_ML_DIR = BASE_DIR / "nexus_ml"
+
+for p in [BASE_DIR, NEXUS_ML_DIR]:
+    if str(p) not in sys.path:
+        sys.path.insert(0, str(p))
 
 from api.routes import router as api_router
-from src.common.port_utils import find_free_port
+from nexus_ml.src.common.port_utils import find_free_port
 
 app = FastAPI(
     title="Nexus-ML Unified Monolith API",
@@ -58,8 +61,11 @@ def health_check():
         "note": "Unified application serving ML & Course services"
     }
 
-if __name__ == "__main__":
+def start():
+    """Helper entry point for direct execution."""
+    port = find_free_port(preferred_port=8000)
     import uvicorn
-    port = find_free_port(8000)
-    print(f"🚀 Starting Nexus-ML on http://127.0.0.1:{port}")
     uvicorn.run("api.main:app", host="127.0.0.1", port=port, reload=True)
+
+if __name__ == "__main__":
+    start()

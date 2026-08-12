@@ -26,9 +26,13 @@ venv/
 ENV/
 
 # Model & Data Artifacts (generated at runtime)
+*.joblib
 artifacts/models/*
 !artifacts/models/.gitkeep
 artifacts/data/*
+nexus_ml/artifacts/models/*
+!nexus_ml/artifacts/models/.gitkeep
+nexus_ml/artifacts/data/*
 
 # Testing & Coverage
 .pytest_cache/
