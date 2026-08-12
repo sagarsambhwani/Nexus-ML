@@ -2,8 +2,8 @@ import numpy as np
 import pandas as pd
 from typing import Dict, Any
 from sklearn.decomposition import TruncatedSVD
-from config import RANDOM_SEED
-from src.common.base_model import BasePipeline
+from nexus_ml.config import RANDOM_SEED
+from nexus_ml.src.common.base_model import BasePipeline
 
 class RecommendationPipeline(BasePipeline):
     def __init__(self):
