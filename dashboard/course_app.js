@@ -180,6 +180,17 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Initial load
-  fetchCourseList("v1");
+  // Initial load checking URL parameters
+  const urlParams = new URLSearchParams(window.location.search);
+  const trackParam = urlParams.get("track") || urlParams.get("version");
+  if (trackParam === "vision" || trackParam === "cv") {
+    updateActiveTab(btnVersionVision);
+    fetchCourseList("vision");
+  } else if (trackParam === "v2" || trackParam === "2") {
+    updateActiveTab(btnVersionV2);
+    fetchCourseList("v2");
+  } else {
+    updateActiveTab(btnVersionV1);
+    fetchCourseList("v1");
+  }
 });
