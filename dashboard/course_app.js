@@ -10,7 +10,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const btnNextChapter = document.getElementById("btnNextChapter");
   const btnVersionV1 = document.getElementById("btnVersionV1");
   const btnVersionV2 = document.getElementById("btnVersionV2");
-  const btnVersionVision = document.getElementById("btnVersionVision");
 
   let ALL_COURSES = [];
   const COURSE_CACHE = {};
@@ -37,43 +36,32 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     } catch (e) {
       if (courseListContainer) {
-        courseListContainer.innerHTML = `<p class="error" style="color:var(--accent-rose); padding:12px;">Failed to load curriculum: ${e.message}</p>`;
+        courseListContainer.innerHTML = `<p class="error" style="color:var(--accent-rose); padding:12px;">Failed to load course list: ${e.message}</p>`;
       }
     }
   }
 
-  function updateActiveTab(activeBtn) {
-    [btnVersionV1, btnVersionV2, btnVersionVision].forEach(btn => {
-      if (btn) {
-        if (btn === activeBtn) {
-          btn.style.background = "#eef2ff";
-          btn.style.color = "var(--accent-primary)";
-        } else {
-          btn.style.background = "transparent";
-          btn.style.color = "var(--text-muted)";
-        }
-      }
-    });
-  }
-
   if (btnVersionV1) {
     btnVersionV1.addEventListener("click", () => {
-      updateActiveTab(btnVersionV1);
+      btnVersionV1.style.background = "#eef2ff";
+      btnVersionV1.style.color = "var(--accent-primary)";
+      if (btnVersionV2) {
+        btnVersionV2.style.background = "transparent";
+        btnVersionV2.style.color = "var(--text-muted)";
+      }
       fetchCourseList("v1");
     });
   }
 
   if (btnVersionV2) {
     btnVersionV2.addEventListener("click", () => {
-      updateActiveTab(btnVersionV2);
+      btnVersionV2.style.background = "#eef2ff";
+      btnVersionV2.style.color = "var(--accent-primary)";
+      if (btnVersionV1) {
+        btnVersionV1.style.background = "transparent";
+        btnVersionV1.style.color = "var(--text-muted)";
+      }
       fetchCourseList("v2");
-    });
-  }
-
-  if (btnVersionVision) {
-    btnVersionVision.addEventListener("click", () => {
-      updateActiveTab(btnVersionVision);
-      fetchCourseList("vision");
     });
   }
 
@@ -96,12 +84,7 @@ document.addEventListener("DOMContentLoaded", () => {
       item.style.cursor = "pointer";
       item.style.background = isActive ? "#eef2ff" : "transparent";
       item.style.color = isActive ? "#4338ca" : "var(--text-muted)";
-      
-      let icon = '📖';
-      if (currentVersion === 'vision') icon = '👁️';
-      else if (currentVersion === 'v2') icon = '🚀';
-
-      item.innerHTML = `<span class="icon">${icon}</span> ${c.title}`;
+      item.innerHTML = `<span class="icon">${currentVersion === 'v2' ? '🚀' : '📖'}</span> ${c.title}`;
       item.title = c.title;
 
       item.addEventListener("click", () => {
@@ -180,17 +163,20 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Initial load checking URL parameters
+  // Initial load
   const urlParams = new URLSearchParams(window.location.search);
-  const trackParam = urlParams.get("track") || urlParams.get("version");
-  if (trackParam === "vision" || trackParam === "cv") {
-    updateActiveTab(btnVersionVision);
-    fetchCourseList("vision");
-  } else if (trackParam === "v2" || trackParam === "2") {
-    updateActiveTab(btnVersionV2);
+  const versionParam = urlParams.get("version");
+  if (versionParam === "v2" || versionParam === "2") {
+    if (btnVersionV2) {
+      btnVersionV2.style.background = "#eef2ff";
+      btnVersionV2.style.color = "var(--accent-primary)";
+      if (btnVersionV1) {
+        btnVersionV1.style.background = "transparent";
+        btnVersionV1.style.color = "var(--text-muted)";
+      }
+    }
     fetchCourseList("v2");
   } else {
-    updateActiveTab(btnVersionV1);
     fetchCourseList("v1");
   }
 });
