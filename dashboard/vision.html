@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nexus Vision Studio | Deep Computer Vision Roadmap & Code</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body class="course-page-body">
+  <div class="app-container">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo-icon" style="background: linear-gradient(135deg, #0284c7, #4f46e5);">👁️</div>
+        <div class="brand-text">
+          <h1>Nexus Vision</h1>
+          <span class="badge" style="background: #e0f2fe; color: #0284c7;">Vision Studio</span>
+        </div>
+      </div>
+
+      <!-- Mode Selector Tabs -->
+      <div style="display: flex; gap: 6px; padding: 12px 14px 4px;">
+        <button id="btnTabRoadmap" class="version-btn active" style="flex: 1; padding: 8px 4px; font-size: 11px; border-radius: 6px; border: 1px solid var(--border-color); background: #eef2ff; color: var(--accent-primary); cursor: pointer; font-weight: 600;">🗺️ 14 Phases</button>
+        <button id="btnTabImplementations" class="version-btn" style="flex: 1; padding: 8px 4px; font-size: 11px; border-radius: 6px; border: 1px solid var(--border-color); background: transparent; color: var(--text-muted); cursor: pointer; font-weight: 600;">💻 17 Projects</button>
+      </div>
+
+      <div class="nav-section-title" id="sectionNavTitle">14-PHASE DEEP ROADMAP</div>
+      
+      <div class="course-search-box" style="padding: 8px 14px;">
+        <input type="text" id="visionSearchInput" placeholder="🔍 Search phases or code..." class="course-search-input" style="width: 100%; padding: 8px 12px; border-radius: 8px; background: #ffffff; border: 1px solid var(--border-color); color: var(--text-main); font-family: inherit; font-size: 13px;">
+      </div>
+
+      <nav class="nav-menu course-sidebar-menu" id="visionListContainer" style="overflow-y: auto; flex: 1; padding: 0 12px 12px;">
+        <div class="loading-text" style="color: var(--text-dim); padding: 12px; font-size: 13px;">Loading Vision Studio modules...</div>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="server-status" style="margin-bottom: 6px;">
+          <span class="status-dot green" id="visionStatusDot"></span> Vision Engine: <strong style="color: var(--accent-emerald);">Active</strong>
+        </div>
+        <div style="margin-top: 8px; display: flex; flex-direction: column; gap: 4px;">
+          <a href="/static/index.html" class="docs-link" style="display: flex; align-items: center; gap: 6px;">⚡ ML Models Dashboard</a>
+          <a href="/static/course.html" class="docs-link" style="display: flex; align-items: center; gap: 6px;">🎓 ML & AI Academy</a>
+          <a href="/docs" target="_blank" class="docs-link">📖 OpenAPI Docs (/docs)</a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <!-- Top Header -->
+      <header class="top-header">
+        <div class="header-titles">
+          <h2 id="visionTitleHeader">Master Roadmap & Architecture Matrix</h2>
+          <div style="display: flex; gap: 8px; margin-top: 6px;">
+            <span class="pill blue" id="visionCategoryBadge">Roadmap Guide</span>
+            <span class="pill purple" id="visionFileBadge">nexus_vision/README.md</span>
+          </div>
+        </div>
+        <div class="header-right-group">
+          <div class="header-actions">
+            <a href="/static/index.html" class="btn btn-secondary" style="text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">⚡ ML Dashboard</a>
+            <a href="/static/course.html" class="btn btn-secondary" style="text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">🎓 ML Academy</a>
+          </div>
+        </div>
+      </header>
+
+      <!-- Reader Card -->
+      <section class="card course-reader-card" style="flex: 1; display: flex; flex-direction: column;">
+        <div class="card-header">
+          <h3 id="currentModuleName">Curriculum Overview</h3>
+          <div class="header-actions">
+            <button class="btn btn-secondary" id="btnPrevModule" style="padding: 6px 12px; font-size: 12px;">← Previous</button>
+            <button class="btn btn-secondary" id="btnNextModule" style="padding: 6px 12px; font-size: 12px;">Next →</button>
+          </div>
+        </div>
+        <div class="card-body markdown-body" id="visionContentBody" style="max-height: calc(100vh - 200px); overflow-y: auto;">
+          <div class="empty-state">
+            <span class="empty-icon">👁️</span>
+            <p>Loading Computer Vision content...</p>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="/static/vision_app.js"></script>
+</body>
+</html>
