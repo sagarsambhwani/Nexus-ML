@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nexus AI Academy | ML & Deep Computer Vision Masterclass</title>
+  <title>Nexus ML Academy | 100-Chapter AI & Machine Learning Masterclass</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -18,21 +18,20 @@
         <div class="logo-icon">🎓</div>
         <div class="brand-text">
           <h1>Nexus Academy</h1>
-          <span class="badge">ML & Vision Tracks</span>
+          <span class="badge">ML & AI Handbooks</span>
         </div>
       </div>
 
-      <!-- Track Selector Tabs -->
-      <div style="display: flex; gap: 4px; padding: 12px 14px 4px;">
-        <button id="btnVersionV1" class="version-btn active" style="flex: 1; padding: 6px 2px; font-size: 11px; border-radius: 6px; border: 1px solid var(--border-color); background: #eef2ff; color: var(--accent-primary); cursor: pointer; font-weight: 600;">V1 Compendium</button>
-        <button id="btnVersionV2" class="version-btn" style="flex: 1; padding: 6px 2px; font-size: 11px; border-radius: 6px; border: 1px solid var(--border-color); background: transparent; color: var(--text-muted); cursor: pointer; font-weight: 600;">V2 Guide 🚀</button>
-        <button id="btnVersionVision" class="version-btn" style="flex: 1; padding: 6px 2px; font-size: 11px; border-radius: 6px; border: 1px solid var(--border-color); background: transparent; color: var(--text-muted); cursor: pointer; font-weight: 600;">Vision 👁️</button>
+      <!-- Version Selector Tabs -->
+      <div style="display: flex; gap: 6px; padding: 12px 16px 4px;">
+        <button id="btnVersionV1" class="version-btn active" style="flex: 1; padding: 7px; font-size: 12px; border-radius: 6px; border: 1px solid var(--border-color); background: #eef2ff; color: var(--accent-primary); cursor: pointer; font-weight: 600;">Course V1</button>
+        <button id="btnVersionV2" class="version-btn" style="flex: 1; padding: 7px; font-size: 12px; border-radius: 6px; border: 1px solid var(--border-color); background: transparent; color: var(--text-muted); cursor: pointer; font-weight: 600;">Course V2 🚀</button>
       </div>
 
       <div class="nav-section-title">CURRICULUM MODULES</div>
       
       <div class="course-search-box" style="padding: 12px 16px;">
-        <input type="text" id="courseSearchInput" placeholder="🔍 Search curriculum..." class="course-search-input" style="width: 100%; padding: 8px 12px; border-radius: 8px; background: #ffffff; border: 1px solid var(--border-color); color: var(--text-main); font-family: inherit; font-size: 13px;">
+        <input type="text" id="courseSearchInput" placeholder="🔍 Search chapters..." class="course-search-input" style="width: 100%; padding: 8px 12px; border-radius: 8px; background: #ffffff; border: 1px solid var(--border-color); color: var(--text-main); font-family: inherit; font-size: 13px;">
       </div>
 
       <nav class="nav-menu course-sidebar-menu" id="courseListContainer" style="overflow-y: auto; flex: 1; padding: 0 12px 12px;">
@@ -43,8 +42,10 @@
         <div class="server-status" style="margin-bottom: 6px;">
           <span class="status-dot green" id="courseStatusDot"></span> Unified API: <strong id="courseStatusText" style="color: var(--accent-emerald);">Active</strong>
         </div>
-        <div style="margin-top: 8px;">
-          <a href="/static/index.html" class="docs-link" style="display: flex; align-items: center; gap: 6px;">⚡ Switch to ML Dashboard</a>
+        <div style="margin-top: 8px; display: flex; flex-direction: column; gap: 4px;">
+          <a href="/static/vision.html" class="docs-link" style="display: flex; align-items: center; gap: 6px; color: var(--accent-primary); font-weight: 600;">👁️ Nexus Vision Studio</a>
+          <a href="/static/index.html" class="docs-link" style="display: flex; align-items: center; gap: 6px;">⚡ ML Models Dashboard</a>
+          <a href="/docs" target="_blank" class="docs-link">📖 OpenAPI Docs (/docs)</a>
         </div>
       </div>
     </aside>
@@ -56,14 +57,19 @@
         <div class="header-titles">
           <h2 id="courseTitleHeader">Course Curriculum & Overview</h2>
           <div style="display: flex; gap: 8px; margin-top: 6px;">
-            <span class="pill purple" id="courseFileBadge">Nexus Academy / Roadmap</span>
-            <span class="pill blue" id="chapterCountBadge">Modules</span>
+            <span class="pill purple" id="courseFileBadge">Nexus Academy / course/README.md</span>
+            <span class="pill blue" id="chapterCountBadge">101 Total Modules</span>
           </div>
         </div>
         <div class="header-right-group">
-          <a href="/static/index.html" class="btn btn-primary" style="text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
-            ⚡ Open ML Models Dashboard
-          </a>
+          <div class="header-actions">
+            <a href="/static/vision.html" class="btn btn-secondary" style="text-decoration: none; display: inline-flex; align-items: center; gap: 6px; background: #e0f2fe; color: #0284c7; font-weight: 600; border: 1px solid #bae6fd;">
+              👁️ Open Vision Studio
+            </a>
+            <a href="/static/index.html" class="btn btn-primary" style="text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+              ⚡ Open ML Dashboard
+            </a>
+          </div>
         </div>
       </header>
 
