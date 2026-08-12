@@ -2,9 +2,9 @@ name: Enterprise ML Suite CI/CD Pipeline
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [ main, master, dev ]
   pull_request:
-    branches: [ main, master ]
+    branches: [ main, master, dev ]
 
 jobs:
   test-and-build:
@@ -26,7 +26,7 @@ jobs:
 
     - name: Automated Model Training
       run: |
-        python scripts/train_all.py
+        python nexus_ml/scripts/train_all.py
 
     - name: Run Pytest Suite
       run: |
