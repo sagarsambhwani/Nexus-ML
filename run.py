@@ -10,10 +10,13 @@ if hasattr(sys.stdout, "reconfigure"):
         pass
 
 BASE_DIR = Path(__file__).resolve().parent
-if str(BASE_DIR) not in sys.path:
-    sys.path.insert(0, str(BASE_DIR))
+NEXUS_ML_DIR = BASE_DIR / "nexus_ml"
 
-from src.common.port_utils import find_free_port
+for p in [BASE_DIR, NEXUS_ML_DIR]:
+    if str(p) not in sys.path:
+        sys.path.insert(0, str(p))
+
+from nexus_ml.src.common.port_utils import find_free_port
 
 def main():
     parser = argparse.ArgumentParser(description="Nexus-ML Unified Server Runner")
