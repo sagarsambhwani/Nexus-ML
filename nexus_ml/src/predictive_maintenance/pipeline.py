@@ -4,8 +4,8 @@ from typing import Dict, Any
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import recall_score, roc_auc_score
-from config import RANDOM_SEED
-from src.common.base_model import BasePipeline
+from nexus_ml.config import RANDOM_SEED
+from nexus_ml.src.common.base_model import BasePipeline
 
 class PredictiveMaintenancePipeline(BasePipeline):
     def __init__(self):
