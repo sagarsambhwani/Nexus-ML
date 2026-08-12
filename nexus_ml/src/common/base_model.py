@@ -3,7 +3,7 @@ import joblib
 import numpy as np
 from pathlib import Path
 from typing import Any, Dict
-from config import MODELS_DIR
+from nexus_ml.config import MODELS_DIR
 
 def save_model(model: Any, filename: str) -> str:
     """Saves a model or dictionary artifact to the models directory."""
