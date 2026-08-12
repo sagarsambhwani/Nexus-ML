@@ -4,8 +4,8 @@ from typing import Dict, Any
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
-from config import RANDOM_SEED
-from src.common.base_model import BasePipeline
+from nexus_ml.config import RANDOM_SEED
+from nexus_ml.src.common.base_model import BasePipeline
 
 class CustomerSegmentationPipeline(BasePipeline):
     def __init__(self):
