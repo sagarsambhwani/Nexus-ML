@@ -2,22 +2,26 @@ import sys
 import time
 from pathlib import Path
 
-# Add project root to sys.path
-BASE_DIR = Path(__file__).resolve().parent.parent
-sys.path.insert(0, str(BASE_DIR))
+# Add workspace root and nexus_ml root to sys.path
+NEXUS_ML_DIR = Path(__file__).resolve().parent.parent
+WORKSPACE_ROOT = NEXUS_ML_DIR.parent
 
-from src.fraud_detection.pipeline import FraudDetectionPipeline
-from src.credit_risk.pipeline import CreditRiskPipeline
-from src.customer_churn.pipeline import CustomerChurnPipeline
-from src.house_prices.pipeline import HousePricePipeline
-from src.recommendation.pipeline import RecommendationPipeline
-from src.demand_forecasting.pipeline import DemandForecastingPipeline
-from src.predictive_maintenance.pipeline import PredictiveMaintenancePipeline
-from src.medical_diagnosis.pipeline import MedicalDiagnosisPipeline
-from src.sentiment_analysis.pipeline import SentimentAnalysisPipeline
-from src.document_classification.pipeline import DocumentClassificationPipeline
-from src.defect_detection.pipeline import DefectDetectionPipeline
-from src.customer_segmentation.pipeline import CustomerSegmentationPipeline
+for p in [WORKSPACE_ROOT, NEXUS_ML_DIR]:
+    if str(p) not in sys.path:
+        sys.path.insert(0, str(p))
+
+from nexus_ml.src.fraud_detection.pipeline import FraudDetectionPipeline
+from nexus_ml.src.credit_risk.pipeline import CreditRiskPipeline
+from nexus_ml.src.customer_churn.pipeline import CustomerChurnPipeline
+from nexus_ml.src.house_prices.pipeline import HousePricePipeline
+from nexus_ml.src.recommendation.pipeline import RecommendationPipeline
+from nexus_ml.src.demand_forecasting.pipeline import DemandForecastingPipeline
+from nexus_ml.src.predictive_maintenance.pipeline import PredictiveMaintenancePipeline
+from nexus_ml.src.medical_diagnosis.pipeline import MedicalDiagnosisPipeline
+from nexus_ml.src.sentiment_analysis.pipeline import SentimentAnalysisPipeline
+from nexus_ml.src.document_classification.pipeline import DocumentClassificationPipeline
+from nexus_ml.src.defect_detection.pipeline import DefectDetectionPipeline
+from nexus_ml.src.customer_segmentation.pipeline import CustomerSegmentationPipeline
 
 def train_all():
     print("=" * 70)
@@ -58,8 +62,9 @@ def train_all():
 
     total_time = round(time.time() - start_total, 2)
     print("\n" + "=" * 70)
-    print(f"SUCCESS: All 12 ML models trained & serialized in {total_time} seconds!")
+    print(f"Training Complete! Total Time: {total_time} seconds.")
     print("=" * 70)
+    return summary
 
 if __name__ == "__main__":
     train_all()
