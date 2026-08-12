@@ -6,8 +6,8 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import Pipeline as SkPipeline
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, f1_score
-from config import RANDOM_SEED
-from src.common.base_model import BasePipeline
+from nexus_ml.config import RANDOM_SEED
+from nexus_ml.src.common.base_model import BasePipeline
 
 class SentimentAnalysisPipeline(BasePipeline):
     def __init__(self):
