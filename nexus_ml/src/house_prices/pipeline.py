@@ -4,8 +4,8 @@ from typing import Dict, Any
 from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error, r2_score
-from config import RANDOM_SEED
-from src.common.base_model import BasePipeline
+from nexus_ml.config import RANDOM_SEED
+from nexus_ml.src.common.base_model import BasePipeline
 
 class HousePricePipeline(BasePipeline):
     def __init__(self):
