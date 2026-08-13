@@ -1,5 +1,6 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Body
 from pathlib import Path
+from typing import Dict, Any, Optional
 import sys
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -9,6 +10,8 @@ if str(BASE_DIR) not in sys.path:
     sys.path.insert(0, str(BASE_DIR))
 if str(NEXUS_VISION_DIR) not in sys.path:
     sys.path.insert(0, str(NEXUS_VISION_DIR))
+
+from api.vision_service.runner import VisionStudioRunner
 
 router = APIRouter(prefix="/api/v1/vision", tags=["Nexus Vision Studio Endpoints"])
 
@@ -91,7 +94,6 @@ def list_implementations():
         mod_num = parts[0] if len(parts) > 1 and parts[0].isdigit() else "01"
         title = parts[1].replace("_", " ").title() if len(parts) > 1 else name_clean.title()
         
-        # Read docstring from file if available
         docstring = ""
         if main_file and main_file.exists():
             with open(main_file, "r", encoding="utf-8") as f:
@@ -106,7 +108,7 @@ def list_implementations():
                     
         modules.append({
             "key": d.name,
-            "title": f"Module {mod_num}: {title}",
+            "title": f"Project {mod_num}: {title}",
             "filename": main_file.name if main_file else "__init__.py",
             "docstring": docstring or "Production vision deliverable implementation.",
             "category": "Core Hands-on Deliverable"
@@ -138,3 +140,64 @@ def get_implementation_code(module_key: str):
         "filename": target_file.name,
         "code": code
     }
+
+
+@router.post("/execute/{module_key}")
+def execute_vision_module(module_key: str, payload: Dict[str, Any] = Body(default={})):
+    """Executes a computer vision algorithm dynamically and returns base64 images and diagnostics."""
+    key = module_key.lower()
+    
+    try:
+        if "convolution" in key or "01" in key:
+            return VisionStudioRunner.run_convolution(
+                kernel_name=payload.get("kernel_name", "sobel_v"),
+                preset=payload.get("preset", "shapes"),
+                padding=int(payload.get("padding", 1)),
+                stride=int(payload.get("stride", 1))
+            )
+        elif "canny" in key or "02" in key:
+            return VisionStudioRunner.run_canny(
+                preset=payload.get("preset", "shapes"),
+                low_thresh=float(payload.get("low_threshold", 30.0)),
+                high_thresh=float(payload.get("high_threshold", 80.0)),
+                sigma=float(payload.get("sigma", 1.0))
+            )
+        elif "hog" in key or "03" in key:
+            return VisionStudioRunner.run_hog_svm(
+                preset=payload.get("preset", "vertical_edges"),
+                cell_size=int(payload.get("cell_size", 8))
+            )
+        elif "sift" in key or "orb" in key or "04" in key:
+            return VisionStudioRunner.run_sift_orb(
+                method=payload.get("method", "orb"),
+                max_features=int(payload.get("max_features", 200))
+            )
+        elif "backprop" in key or "cnn" in key or "05" in key:
+            return VisionStudioRunner.run_scratch_cnn(
+                epochs=int(payload.get("epochs", 15)),
+                learning_rate=float(payload.get("learning_rate", 0.05))
+            )
+        elif "iou" in key or "nms" in key or "07" in key:
+            return VisionStudioRunner.run_iou_nms(
+                iou_threshold=float(payload.get("iou_threshold", 0.5)),
+                score_threshold=float(payload.get("score_threshold", 0.1))
+            )
+        elif "stereo" in key or "calibration" in key or "10" in key:
+            return VisionStudioRunner.run_stereo_depth(
+                baseline_m=float(payload.get("baseline_meters", 0.1)),
+                focal_px=float(payload.get("focal_length_px", 500.0)),
+                num_disp=int(payload.get("num_disparities", 16))
+            )
+        elif "production" in key or "pipeline" in key or "15" in key:
+            return VisionStudioRunner.run_production_pipeline(
+                num_runs=int(payload.get("num_runs", 50)),
+                batch_size=int(payload.get("batch_size", 4))
+            )
+        else:
+            # Generic fallback to production pipeline or convolution
+            return VisionStudioRunner.run_convolution(
+                kernel_name="gaussian_3x3",
+                preset="shapes"
+            )
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Execution error in '{module_key}': {str(e)}")
