@@ -24,6 +24,7 @@ from nexus_vision.implementations.p05_scratch_cnn_backprop.scratch_cnn import Sc
 from nexus_vision.implementations.p07_iou_nms_detector.iou_nms import compute_pairwise_iou, non_maximum_suppression, box_xywh_to_xyxy
 from nexus_vision.implementations.p10_camera_calibration_stereo.stereo_depth import StereoDepthEstimator
 from nexus_vision.implementations.p15_production_cv_pipeline.production_pipeline import ProductionVisionPipeline
+from api.vision_service.runner import VisionStudioRunner
 
 def test_numpy_convolution():
     img = np.ones((8, 8), dtype=np.float32)
@@ -91,6 +92,21 @@ def test_production_pipeline():
     assert len(results) == 1
     assert "predicted_label" in results[0]
     assert "confidence" in results[0]
+
+def test_vision_studio_runner():
+    res_conv = VisionStudioRunner.run_convolution(kernel_name="sobel_v", preset="shapes")
+    assert "output_image_b64" in res_conv
+    assert res_conv["latency_ms"] >= 0
+
+    res_canny = VisionStudioRunner.run_canny(preset="defect")
+    assert "output_image_b64" in res_canny
+    assert res_canny["edge_pixel_count"] >= 0
+
+    res_nms = VisionStudioRunner.run_iou_nms(iou_threshold=0.5)
+    assert res_nms["kept_count"] == 2
+
+    res_stereo = VisionStudioRunner.run_stereo_depth()
+    assert "depth_map_b64" in res_stereo
 
 @pytest.mark.skipif(not TORCH_AVAILABLE, reason="PyTorch not installed")
 def test_pytorch_resnet():
