@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nexus Vision Studio | Deep Computer Vision Lab & Roadmap</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body class="course-page-body">
+  <div class="app-container">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo-icon" style="background: linear-gradient(135deg, #0284c7, #4f46e5);">👁️</div>
+        <div class="brand-text">
+          <h1>Nexus Vision</h1>
+          <span class="badge" style="background: #e0f2fe; color: #0284c7;">Vision Studio</span>
+        </div>
+      </div>
+
+      <!-- Mode Selector Tabs -->
+      <div style="display: flex; gap: 6px; padding: 12px 14px 4px;">
+        <button id="btnTabImplementations" class="version-btn active" style="flex: 1; padding: 8px 4px; font-size: 11px; border-radius: 6px; border: 1px solid var(--border-color); background: #eef2ff; color: var(--accent-primary); cursor: pointer; font-weight: 600;">⚡ 17 Projects</button>
+        <button id="btnTabRoadmap" class="version-btn" style="flex: 1; padding: 8px 4px; font-size: 11px; border-radius: 6px; border: 1px solid var(--border-color); background: transparent; color: var(--text-muted); cursor: pointer; font-weight: 600;">🗺️ 14 Phases</button>
+      </div>
+
+      <div class="nav-section-title" id="sectionNavTitle">17 HANDS-ON DELIVERABLES</div>
+      
+      <div class="course-search-box" style="padding: 8px 14px;">
+        <input type="text" id="visionSearchInput" placeholder="🔍 Search projects or phases..." class="course-search-input" style="width: 100%; padding: 8px 12px; border-radius: 8px; background: #ffffff; border: 1px solid var(--border-color); color: var(--text-main); font-family: inherit; font-size: 13px;">
+      </div>
+
+      <nav class="nav-menu course-sidebar-menu" id="visionListContainer" style="overflow-y: auto; flex: 1; padding: 0 12px 12px;">
+        <div class="loading-text" style="color: var(--text-dim); padding: 12px; font-size: 13px;">Loading Vision Studio modules...</div>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="server-status" style="margin-bottom: 6px;">
+          <span class="status-dot green" id="visionStatusDot"></span> Vision Engine: <strong style="color: var(--accent-emerald);">Active</strong>
+        </div>
+        <div style="margin-top: 8px; display: flex; flex-direction: column; gap: 4px;">
+          <a href="/static/index.html" class="docs-link" style="display: flex; align-items: center; gap: 6px;">⚡ ML Models Dashboard</a>
+          <a href="/static/course.html" class="docs-link" style="display: flex; align-items: center; gap: 6px;">🎓 ML & AI Academy</a>
+          <a href="/docs" target="_blank" class="docs-link">📖 OpenAPI Docs (/docs)</a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <!-- Top Header -->
+      <header class="top-header">
+        <div class="header-titles">
+          <h2 id="visionTitleHeader">2D Convolution from Scratch (NumPy)</h2>
+          <div style="display: flex; gap: 8px; margin-top: 6px;">
+            <span class="pill blue" id="visionCategoryBadge">Core Deliverable</span>
+            <span class="pill purple" id="visionFileBadge">p01_numpy_convolution/convolution_2d.py</span>
+            <span class="pill green" id="visionLatencyBadge" style="display:none;">⚡ 0.42 ms</span>
+          </div>
+        </div>
+        <div class="header-right-group">
+          <!-- View Modes for Projects -->
+          <div class="view-mode-tabs" id="projectModeTabs">
+            <button class="tab-btn active" id="tabModePlayground">⚡ Interactive Lab</button>
+            <button class="tab-btn" id="tabModeTheory">📖 Theory & Math</button>
+            <button class="tab-btn" id="tabModeCode">💻 Source Code</button>
+          </div>
+          <div class="header-actions">
+            <a href="/static/index.html" class="btn btn-secondary" style="text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">⚡ ML Dashboard</a>
+            <a href="/static/course.html" class="btn btn-secondary" style="text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">🎓 ML Academy</a>
+          </div>
+        </div>
+      </header>
+
+      <!-- VIEW 1: Interactive Evaluation Playground -->
+      <div id="viewPlayground" class="vision-playground-container" style="display: flex; flex-direction: column; gap: 16px; flex: 1; overflow-y: auto; padding-bottom: 24px;">
+        <!-- Control Card -->
+        <section class="card" style="padding: 16px 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+            <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;" id="dynamicControlPanel">
+              <!-- Controls populated dynamically based on active module -->
+              <div>
+                <label style="font-size: 11px; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 4px;">TEST PATTERN</label>
+                <select id="ctrlPreset" style="padding: 6px 12px; border-radius: 6px; border: 1px solid var(--border-color); background: #ffffff; font-family: inherit; font-size: 13px;">
+                  <option value="shapes">Geometric Shapes</option>
+                  <option value="defect">Surface Defect & Crack</option>
+                  <option value="vertical_edges">Vertical Stripes</option>
+                  <option value="checkerboard">Checkerboard</option>
+                </select>
+              </div>
+
+              <div id="ctrlParamGroup" style="display: flex; gap: 12px; align-items: center;">
+                <!-- Dynamic inputs injected by vision_app.js -->
+              </div>
+            </div>
+
+            <button class="btn btn-primary" id="btnExecuteModule" style="display: inline-flex; align-items: center; gap: 6px; padding: 8px 18px; font-weight: 600;">
+              🚀 Run Live Evaluation
+            </button>
+          </div>
+        </section>
+
+        <!-- Visual Output Gallery -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
+          <!-- Visual Panel 1: Input -->
+          <section class="card" style="display: flex; flex-direction: column;">
+            <div class="card-header" style="padding: 12px 16px; border-bottom: 1px solid var(--border-color);">
+              <h4 style="font-size: 13px; font-weight: 600;">📷 Input Image / Tensor</h4>
+              <span class="pill blue" id="inputShapeBadge">64x64</span>
+            </div>
+            <div class="card-body" style="display: flex; align-items: center; justify-content: center; padding: 20px; min-height: 220px; background: #fafafa;">
+              <img id="imgVisualInput" src="" alt="Input visualization" style="max-width: 100%; max-height: 200px; border-radius: 8px; border: 1px solid var(--border-color); box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
+            </div>
+          </section>
+
+          <!-- Visual Panel 2: Primary Output / Edge / Heatmap -->
+          <section class="card" style="display: flex; flex-direction: column;">
+            <div class="card-header" style="padding: 12px 16px; border-bottom: 1px solid var(--border-color);">
+              <h4 style="font-size: 13px; font-weight: 600;" id="outputCardTitle">✨ Algorithm Output</h4>
+              <span class="pill green" id="outputShapeBadge">Processed</span>
+            </div>
+            <div class="card-body" style="display: flex; align-items: center; justify-content: center; padding: 20px; min-height: 220px; background: #fafafa;">
+              <img id="imgVisualOutput" src="" alt="Algorithm output" style="max-width: 100%; max-height: 200px; border-radius: 8px; border: 1px solid var(--border-color); box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
+            </div>
+          </section>
+
+          <!-- Visual Panel 3: Secondary / Intermediate Step (Blurred/NMS/Gradients) -->
+          <section class="card" id="intermediateCard" style="display: flex; flex-direction: column;">
+            <div class="card-header" style="padding: 12px 16px; border-bottom: 1px solid var(--border-color);">
+              <h4 style="font-size: 13px; font-weight: 600;" id="intermediateCardTitle">🔍 Intermediate Stage</h4>
+              <span class="pill purple" id="intermediateShapeBadge">Diagnostic</span>
+            </div>
+            <div class="card-body" style="display: flex; align-items: center; justify-content: center; padding: 20px; min-height: 220px; background: #fafafa;">
+              <img id="imgVisualIntermediate" src="" alt="Intermediate visualization" style="max-width: 100%; max-height: 200px; border-radius: 8px; border: 1px solid var(--border-color); box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
+            </div>
+          </section>
+        </div>
+
+        <!-- Telemetry & Diagnostic Report -->
+        <section class="card" style="padding: 16px 20px;">
+          <div class="card-header" style="padding: 0 0 12px 0; border-bottom: 1px solid var(--border-color); margin-bottom: 12px;">
+            <h4 style="font-size: 13px; font-weight: 600;">📊 Live Execution Diagnostics & Telemetry</h4>
+          </div>
+          <div id="telemetrySummary" style="font-size: 13px; color: var(--text-main); margin-bottom: 12px; line-height: 1.5;">
+            Click <strong>"🚀 Run Live Evaluation"</strong> to execute this algorithm with selected parameters.
+          </div>
+          <pre id="telemetryJson" style="background: #f8fafc; border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; font-family: var(--font-mono); font-size: 12px; color: var(--text-muted); overflow-x: auto; max-height: 160px;">{}</pre>
+        </section>
+      </div>
+
+      <!-- VIEW 2: Reader Card for Theory & Code -->
+      <section class="card course-reader-card" id="viewReader" style="display: none; flex: 1; flex-direction: column;">
+        <div class="card-header">
+          <h3 id="currentReaderTitle">Theoretical Guide</h3>
+          <div class="header-actions">
+            <button class="btn btn-secondary" id="btnPrevModule" style="padding: 6px 12px; font-size: 12px;">← Previous</button>
+            <button class="btn btn-secondary" id="btnNextModule" style="padding: 6px 12px; font-size: 12px;">Next →</button>
+          </div>
+        </div>
+        <div class="card-body markdown-body" id="visionContentBody" style="max-height: calc(100vh - 200px); overflow-y: auto;">
+          <div class="empty-state">
+            <span class="empty-icon">👁️</span>
+            <p>Loading Computer Vision content...</p>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="/static/vision_app.js"></script>
+</body>
+</html>

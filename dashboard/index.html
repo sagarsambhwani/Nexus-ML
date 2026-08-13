@@ -66,8 +66,10 @@
         <div class="server-status" style="margin-bottom: 6px;">
           <span class="status-dot green" id="mlStatusDot"></span> Unified API: <strong id="apiStatusText">Connected</strong>
         </div>
-        <div style="margin-top: 10px; display: flex; flex-direction: column; gap: 4px;">
-          <a href="/docs" target="_blank" class="docs-link">📖 API OpenAPI Docs (/docs)</a>
+        <div style="margin-top: 10px; display: flex; flex-direction: column; gap: 6px;">
+          <a href="/static/vision.html" class="docs-link" style="font-weight: 600; color: #0284c7; display: flex; align-items: center; gap: 6px; background: #f0f9ff; padding: 6px 10px; border-radius: 6px; border: 1px solid #bae6fd;">👁️ Nexus Vision Studio</a>
+          <a href="/static/course.html" class="docs-link" style="display: flex; align-items: center; gap: 6px;">🎓 ML & AI Academy (100 Ch)</a>
+          <a href="/docs" target="_blank" class="docs-link">📖 OpenAPI Docs (/docs)</a>
         </div>
       </div>
     </aside>
@@ -91,7 +93,8 @@
             <button class="tab-btn" id="tabCourse">🎓 100-Chapter Course</button>
           </div>
           <div class="header-actions" id="headerActions">
-            <a href="/static/course.html" target="_blank" class="btn btn-secondary" style="text-decoration:none; display: inline-flex; align-items: center; gap: 6px;">🎓 Course Page</a>
+            <a href="/static/vision.html" class="btn btn-secondary" style="text-decoration:none; display: inline-flex; align-items: center; gap: 6px; background: #e0f2fe; color: #0284c7; font-weight: 600; border: 1px solid #bae6fd;">👁️ Vision Studio</a>
+            <a href="/static/course.html" class="btn btn-secondary" style="text-decoration:none; display: inline-flex; align-items: center; gap: 6px;">🎓 Academy</a>
             <button class="btn btn-secondary" id="btnLoadPreset">⚡ Load High Risk Preset</button>
             <button class="btn btn-secondary" id="btnLoadNormalPreset">🟢 Load Normal Preset</button>
             <button class="btn btn-primary" id="btnRunInference">🚀 Run Model Inference</button>
